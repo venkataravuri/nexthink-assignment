@@ -135,10 +135,63 @@ Refer to section '' for Layered Techincal Architecture.
 
 ### Business/Domain Services
 
+Reactor existing 'Engine' functionality into multiple domain-specific microservices aka. Cloud-Native apps. Cloud native apps can exploit scale, elasticity, resiliency, and flexibility provided by in public clouds. Inviddual teams can work on these microservices and rollout new functionality quickly.
 
-#### Peer-to-Peer Choregraphy & Centralized Workflow/Orchestration Engine
+- The services should be designed as a self contained services or microservices, packed as containers for portability, deployed to immutable infrastructure.
+- Microservices communicate with each other via APIs and use event-driven architecture, which makes them loosely coupled, serves to enhance the overall performance of each application.
 
-#### Analytics & Insights
+| Microservice | Role & Responsibilities|
+| --- | --- |
+| Digital Experience API | ? |
+| Remote Actions | ? |
+| Query Engine | ? |
+| Integration Platform Services | ? |
+
+Each of these services will have their own databases where process state-machine informaiton and metadata is stored. The insights are sourced from Clickhouse database.
+
+#### Internal Communincaitons
+
+Services are communicate through event-driven mechanism over a pub/sub channel. Each each service emits events which are subscribed by other services to perform the actions. For example, digital experience service can emit notification events which are subsribed by Remote Actions service to delevier to user. 
+
+##### Peer-to-Peer Choregraphy & Centralized Workflow/Orchestration Engine
+
+Peer to peer task choreography using Pub/sub model works for simplest flows, but this approach has following issues:
+- Process flows are “embedded” within the code of multiple microservices
+- As the number of microservices grow and the complexity of the processes increases, getting visibility into these distributed workflows becomes difficult without a central orchestrator.
+- Cannot answer "How much are we done with process X"?
+
+Hence a centralized Orchestration Engine is also needed to orchestrate microservices-based process flows.
+- Each task in process or business flows are implemented as microservices.
+
+#### Data Analytics & Insights
+
+Turn raw data which is a collection of facts into actionable insights. Analyse raw data for data-driven insights in the form of patterns, trends, groups, segments to answer certain types of questions. 
+
+Follow below 5-step process to derive insights, metrics aka. KPIs.
+
+1. Data cleaning
+2. Establishing relationships and trends
+3. Statistics calculation
+4. Build advanced analytics models 
+5. Constitute this process.
+
+### Data Modeling
+
+A shared database & shared schema approach would be ideal for given use cases. Wherein tenants' data is separated by a column in each table (could be TenantId), that shows the owner of the row.
+
+Every domain entity information includes three classes of columns **time, dimensions and metrics**.
+- Combination of **tenant-id & timestamp** column is the primary partition mechanism. 
+- **Dimensions** are values that can be used to filter, query or group-by.
+- **Metrics** are values that can be aggregated, and are nearly always numeric.
+
+Entities are ```modeled by data source``` over ```model by metrics```
+
+- Modeling by Metrics - Measurements of all metrics of the same data source at a certain time point are stored in the same row. 
+- Modeling by Metrics - odeling by metrics, where each row of data represents a measurement of a certain metric of a data source at a certain time point.
+
+Build Data Processing Jobs which perform SQL & MapReduce tasks to analyze data patterns, trends, groups, segments to answer certain types of questions.
+
+Performance Tips: Downsampling through rollups were converting high-resolution time series data into low-resolution time series data.
 
 
 ### Technical Architecture
