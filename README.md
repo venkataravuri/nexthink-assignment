@@ -1,4 +1,4 @@
-<img src="docs/images/nexthink-logo.png" width="25%" height="25%">
+<img src="docs/images/nexthink-logo.png" width="20%" height="20%">
 
 # 🔥 Nexthink Interview Assignment 🎉
 
@@ -10,24 +10,38 @@ A high-level architecture of alternative forward-looking solution that replaces 
 
 Refer to assignment problem statement [Nexthink Architecture Quiz]() for existing system contraints and goals of prposed solution.
 
+The 🎡 **to-be architecture** is explained through ```Functional Architecture, Technical Architecture, Component Designs, Deployment Architecture and more```, each addressing unique concerns for distinct stakeholders & audience.
+
+> While proposing solution, I made plenty of assumptions, also highlighed rationale behind those assumptions.
+
 ‼️ **Disclaimer**
 
 System design & architecture has many approaches and alternatives, approaches that I took in prposed solution is soley based on assignment instructions with narrow descriptions. Hence, it could be changed based on understand use cases in depth. Architecure is about "Trade-offs" along with several dimensions scalability, reliability, throughput, cost-effectivness and more. Proposed architecture best of everything.  
 
-📚 **Table of Contents**
-- ?
-- ?
-- ?
-
-### 💦 Foreword
-
-The 🎡 **to-be architecture** is explained through ```Functional Architecture, Technical Architecture, Component Designs, Deployment Architecture and more```, each addressing unique concerns for distinct stakeholders & audience.
-
-While proposing solution, I made plenty of assumptions, also highlighed rationale behind those assumptions.
+### 📚 Table of Contents
+- [Assumptions]() & [Out of Scope]()
+- [Current Solution Limitations & Constraints]()
+- [To-be Architecture]()
+    - [High-level Architecture Goals]()
+- [Funtional Analysis & Design]()
+    - [Functional Requirements]()
+    - [Non Functional Requirements]()
+        - [Data Volumes & Traffic Projections]()
+- [Solution Architecture]()
+    - [Ingestion Subsystem Design & Components]()
+        - [Techincal Architecture]()
+        - [Scalability & Near real-time Analytics]()
+    - [Experience Subsystem Desing & Components]()
+        - [Technical Architecture]()
+            - [Microfrontents]()
+            - [Business/Domain Services]()
+            - [Data Analytics & Insights]()
+- [Deployment Architecture]()
+- [Security Architecture]()
+- [References]()
 
 
 #### Assumptions
-
 
 #### Out of Scope
 
@@ -55,7 +69,6 @@ The overaching goals of re-architected solution are,
 Leverage mix of cloud agnostic & could-specific services 
 
 3. **Security, Governance and compliance**: Able to 
-
 
 ### 🌈 Functional Analysis & Design
 
@@ -130,6 +143,11 @@ Assumption: 2000 events in a day ~ 2000/8 ~ 5
 
 ## 🏁 Solution Architecture
 
+Solution architecture borken down into two streams, namely,
+
+1. Ingestion subsystem
+2. Experiences subsystem 
+
 ### 🚀 Ingestion subsystem components & design
 
 The subsystem components are designed to,
@@ -141,7 +159,7 @@ The subsystem components are designed to,
 
 Ingestion mechanism supports in-steam trends/analytics for SRE & Tech Ops teams to spot any anomolies and take corrective action.
 
-<img src="docs/images/Ingestion.jpg" width="70%" height="70%" alt="Ingestion Subsystem Architecture" />
+<img src="docs/images/Ingestion.jpg" width="100%" height="100%" alt="Ingestion Subsystem Architecture" />
 
 Can't see diagram, click [Miro](https://miro.com/app/board/uXjVMsKyGeM=/?share_link_id=177577594401) to view diagram.
 
@@ -194,7 +212,7 @@ There could be raw data capture service for audits, compliance and future legal 
 
 ## 🌎 Portal Subsystem Architecture
 
-<img src="docs/images/portal.jpg" width="80%" height="80%" alt="Portal & Business service Components" />
+<img src="docs/images/portal.jpg" width="100%" height="100%" alt="Portal & Business service Components" />
 
 ### SPA & Microfrontents
 
@@ -253,8 +271,13 @@ Every domain entity information includes three classes of columns **time, dimens
 
 Entities are ```modeled by data source``` over ```model by metrics```
 
-- Modeling by Metrics - Measurements of all metrics of the same data source at a certain time point are stored in the same row. 
-- Modeling by Metrics - odeling by metrics, where each row of data represents a measurement of a certain metric of a data source at a certain time point.
+Modeling by Metrics - Measurements of all metrics of the same data source at a certain time point are stored in the same row.
+
+Modeling by Metrics - odeling by metrics, where each row of data represents a measurement of a certain metric of a data source at a certain time point.
+
+Below ER diagram depicts few critical entitites in the solution,
+
+<img src="docs/images/data-model.jpg" width="35%" height="35%" alt="data model" />
 
 Build Data Processing Jobs which perform SQL & MapReduce tasks to analyze data patterns, trends, groups, segments to answer certain types of questions.
 
@@ -270,6 +293,4 @@ Performance Tips: Downsampling through rollups were converting high-resolution t
 ### Security & Privacy
 
 ### Performance View
-
-## Data Model 
 
