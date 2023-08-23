@@ -1,4 +1,4 @@
-<img src="nexthink-logo.png" width="30%" height="30%">
+<img src="docs/images/nexthink-logo.png" width="30%" height="30%">
 
 # Nexthink Interview Assignment
 
@@ -74,9 +74,9 @@ The subsystem components are designed to,
 
 Ingestion mechanism supports in-steam trends/analytics for SRE & Tech Ops teams to spot any anomolies and take corrective action.
 
-<img src="" width="" height="" alt="Ingestion subsystem" />
+<img src="docs/images/Ingestion.jpg" width="70%" height="70%" alt="Ingestion Subsystem Architecture" />
 
-Refer to Miro diagram.
+Can't see diagram, click [Miro](https://miro.com/app/board/uXjVMsKyGeM=/?share_link_id=177577594401) to view diagram.
 
 ### Critical Components Role & Responsibilities
 
@@ -125,7 +125,18 @@ These Microservices are Kafka consumers and auto-scaled through K8s HPA. They ha
 
 There could be raw data capture service for audits, compliance and future legal conflicts or Peformance & Volume testing dress reherrsals.
 
-### Portal subsystem components Solution Architecture - 
+## Portal Subsystem Architecture
+
+<img src="docs/images/portal.jpg" width="80%" height="80%" alt="Portal & Business service Components" />
+
+### SPA & Microfrontents
+
+Refer to section '' for Layered Techincal Architecture.
+
+### Business/Domain Services
+
+
+#### Peer-to-Peer Choregraphy & Centralized Workflow/Orchestration Engine
 
 #### Analytics & Insights
 
