@@ -1,25 +1,27 @@
-<img src="docs/images/nexthink-logo.png" width="30%" height="30%">
+<img src="docs/images/nexthink-logo.png" width="25%" height="25%">
 
-# Nexthink Interview Assignment
+# 🔥 Nexthink Interview Assignment 🎉
 
-### Quick Overview
+Assignment response is documented in my personal Github repository at using Markdown language, 🌎 ⚓ https://github.com/venkataravuri/nexthink-assignment/
+
+### 🚁 Quick Overview
 
 A high-level architecture of alternative forward-looking solution that replaces existing single-tenant solution with a scalable & elastic multi-tenant solution. It also highlights how the proposed solution addresses limitations & constraints for current system with a re-engineered and re-architected solution.
 
 Refer to assignment problem statement [Nexthink Architecture Quiz]() for existing system contraints and goals of prposed solution.
 
-**Disclaimer**
+‼️ **Disclaimer**
 
 System design & architecture has many approaches and alternatives, approaches that I took in prposed solution is soley based on assignment instructions with narrow descriptions. Hence, it could be changed based on understand use cases in depth. Architecure is about "Trade-offs" along with several dimensions scalability, reliability, throughput, cost-effectivness and more. Proposed architecture best of everything.  
 
-**Table of Contents**
+📚 **Table of Contents**
 - ?
 - ?
 - ?
 
-### Foreword
+### 💦 Foreword
 
-The **to-be architecture** is explained through ```Functional Architecture, Technical Architecture, Component Designs, Deployment Architecture and more```, each addressing unique concerns for distinct stakeholders & audience.
+The 🎡 **to-be architecture** is explained through ```Functional Architecture, Technical Architecture, Component Designs, Deployment Architecture and more```, each addressing unique concerns for distinct stakeholders & audience.
 
 While proposing solution, I made plenty of assumptions, also highlighed rationale behind those assumptions.
 
@@ -41,7 +43,7 @@ Due to time constraintes, folloiwng topics are considered as out of scope,
 
 Re-engineer & refactor existing components to pave-a-way for a true multi-tenant solution which is resilient, crash & fault tolerant and extremely scalable.
 
-### High-level Goals
+### 🚩 High-level Architecture Goals
 
 The overaching goals of re-architected solution are,
 
@@ -55,15 +57,80 @@ Leverage mix of cloud agnostic & could-specific services
 3. **Security, Governance and compliance**: Able to 
 
 
-### Functional Architecture & Design
+### 🌈 Functional Analysis & Design
 
-### Requirements & High-level Use Cases
+The main actors of the system could be,
+1. Organization employees
+2. IT Help Desk Staff
+3. IT Ops.
+4. Privacy Officer & InfoSec Teams
+5. Device & Peripheral Providers
+6. System Administrators
 
-#### Data Volumes
+#### 🚞 Functional Requirements
 
-## Solution Architecture
+Only architecure significant system use cases and features are analyzed,
 
-### Ingestion subsystem components & design
+The solution has belwo feature for IT Help Desk and Ops. teams,
+
+**Digital Employee Experience Features**: 
+- Track a rich set of metrics like device health, OS, app performance, users, and network. Proactively identify issues, troubleshoot and remediate with automation. 
+- Insight into employee experience across installed apps and OS. Quickly surface users, apps and devices with poor experience that need your attention.
+- Gather employee sentiment through customized and contextual surveys. Get timely insights into overall employee experience beyond quantitative performance metrics, and set up workflows based on survey responses.
+
+System Administrators should be able to,
+
+**Workflow Orchestration**
+- Orchestrate and automate IT tasks, resolve issues, and send user notifications with Freestyle Orchestrator, a powerful, no/low-code orchestration platform. Extend workflows to third-party tools across your environment via REST API.
+- Automate incident management with contextual dashboards that surface diagnostic information relevant to the specific issue. 
+
+**Actionable Insights**
+Aggregate and correlate data from multiple sources across your digital workspace to visualize environment KPIs, understand trends and gain meaningful insights.
+
+#### ♨️ Non Functional Requirements
+
+Following non-fucntional requiremnts have been highlighted as critical to to-be solution [Few assumed by nature of the solution],
+
+- Availablity - System components should be highly available across several geographies.
+- Performance - Services should have low-latency and support high-throuput. Should accomodate burst workloads during peak hours. 
+- Resiliency - System component should be resilient to temporary glitiches and self-healing. Components should recover from crash
+- Scalabiliyt & Elasiticity - Components should be auto-scalable based on traffic patterns
+- Privacy & Data Localization - Should complaint to GDPR and other privacy governance rules.
+- Isolation - Data of each tenant is isolated.
+
+RTO & RPO of the system services not specified, however it is assumed thety will be stringent as critical to businesses.
+
+#### ✈️ Data Volumes & Traffic Projections 🎢
+
+Below is quick estimate of capacity and projected traffic volumes. This information will help Infra & DevOps teams to size the infrastructure capacity to coup peak traffic scenarios. Also acts as inputs to Performance and Volume testing aka. Load Testing.
+
+- Each collector captures, aggregates, and broadcasts daily about 1-2000 events totaling 10MB from each device.
+- Our customers have between 10K and 500K installed collectors.
+- 1000 customers for a total of 15 Million endpoints
+
+```
+Data volume per day ~ (Data size per day by a collector) * (# of collectors) * (# no. of customers)
+                    ~ 10 MB * 500 K * 1000 Customers
+					~ 👊 4,768 TB (Or) 4.6 PB
+```
+
+> Note: It is unclear that data capture is compressed or not. 
+
+**🚖 Traffic Estimates**
+
+It is assumed that employees work 8 hours a day employees. Also assumed several employees start their work at regular interval of the day, resulting peak traffic.
+
+Assumption: 2000 events in a day ~ 2000/8 ~ 5
+
+| Device | Traffic per **min** | Y1 Growth |
+| --- | --- | --- |
+| 1 collector | 5 rps | 6 rps/min | 
+| 500K Collectors | 👊 2.5 million rps/min | ? |
+| 1000 customers Collectors | 🚀🚀🚀 2.5 billion rps/min | ? |
+
+## 🏁 Solution Architecture
+
+### 🚀 Ingestion subsystem components & design
 
 The subsystem components are designed to,
 - Handle **write-heavy traffic** with **high concurrency**
@@ -80,7 +147,7 @@ Can't see diagram, click [Miro](https://miro.com/app/board/uXjVMsKyGeM=/?share_l
 
 ### Critical Components Role & Responsibilities
 
-#### Ingestion Gateway
+#### 🎌 Ingestion Gateway
 
 Ingestion Gateway is a horizontally scalable bi-directional communication service to captures 'Collector Agent' emitter events/data, validates them and deliver to relevant Kafka topics to further processing. The validation includes,
 1. Authenticate Collector Agents through Client Certificates or other credentials/token-based mechnisms.
@@ -104,7 +171,7 @@ Processing of raw data is des-coupled from capture for high-throughput. Backpres
 **Kafka Topic Strategy**
 For parallel processing, multiple Kafka topics with partitions should be introduced. Topics can be designed by tenant or by data/entity type or by function and more. Topic by tenant may not be ideal, when a new tenant is added new topics & partitions should be created along with consumers should be introduced.
 
-### Streaming Apps & Near-realtime Analytics
+### 🏇 Streaming Apps & Near-realtime Analytics
 
 Streaming apps will process incoming data/events to,
 
@@ -125,7 +192,7 @@ These Microservices are Kafka consumers and auto-scaled through K8s HPA. They ha
 
 There could be raw data capture service for audits, compliance and future legal conflicts or Peformance & Volume testing dress reherrsals.
 
-## Portal Subsystem Architecture
+## 🌎 Portal Subsystem Architecture
 
 <img src="docs/images/portal.jpg" width="80%" height="80%" alt="Portal & Business service Components" />
 
@@ -163,7 +230,7 @@ Peer to peer task choreography using Pub/sub model works for simplest flows, but
 Hence a centralized Orchestration Engine is also needed to orchestrate microservices-based process flows.
 - Each task in process or business flows are implemented as microservices.
 
-#### Data Analytics & Insights
+#### 📊 Data Analytics & Insights
 
 Turn raw data which is a collection of facts into actionable insights. Analyse raw data for data-driven insights in the form of patterns, trends, groups, segments to answer certain types of questions. 
 
