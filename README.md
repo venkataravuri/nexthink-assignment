@@ -1,8 +1,12 @@
+<img src="nexthink-logo.png" width="30%" height="30%">
+
 # Nexthink Interview Assignment
 
-This document proposes a high-level architecture to replace existing single tenant solution with a scalable & elastic multi-tenant solution.
+### Quick Overview
 
-Refer to [Nexthink Architecture Quiz]() document for detailed problem statement.
+A high-level architecture of alternative forward-looking solution that replaces existing single-tenant solution with a scalable & elastic multi-tenant solution. It also highlights how the proposed solution addresses limitations & constraints for current system with a re-engineered and re-architected solution.
+
+Refer to assignment problem statement [Nexthink Architecture Quiz]() for existing system contraints and goals of prposed solution.
 
 **Table of Contents**
 - ?
