@@ -1,4 +1,4 @@
-<img src="docs/images/nexthink-logo.png" width="20%" height="20%">
+<img src="docs/images/nexthink-logo.png" width="20%" height="20%" />
 
 # 🔥 Nexthink Interview Assignment 🎉
 
@@ -15,24 +15,24 @@ Refer to :question: problem statement [Nexthink Architecture Quiz]() for current
 
 ‼️ **Disclaimer**
 
-There are numerous ways to design systems, each with various approaches and plenty of alternatives. The methods I employed in this case take into account _industry-standard practices, tools, limitations in resources, and other factors_. Moreover **Architecure is about making "Trade-offs"** along the dimensions like scalability, reliability, throughput, cost-effectivness and more. Proposed architecture accomodates best of everything.  
+There are numerous ways to design systems, each with various approaches and plenty of alternatives. The methods I employed in this case take into account _industry-standard practices, tools, limitations in resources, and other factors_. Moreover **Architecture is about making "Trade-offs"** along the dimensions like scalability, reliability, throughput, cost-effectiveness and more. Proposed architecture accommodates best of everything.  
 
 ### 📚 Table of Contents
 - [Assumptions](#assumptions) & [Out of Scope](out-of-scope)
 - [Current Solution Limitations & Constraints]()
 - [To-be Architecture]()
     - [High-level Architecture Goals]()
-- [Funtional Analysis & Design]()
+- [Functional Analysis & Design]()
     - [Functional Requirements]()
     - [Non Functional Requirements]()
         - [Data Volumes & Traffic Projections]()
 - [Solution Architecture]()
     - [Ingestion Subsystem Design & Components]()
-        - [Techincal Architecture]()
-        - [Scalability & Near real-time Analytics]()
-    - [Experience Subsystem Desing & Components]()
         - [Technical Architecture]()
-            - [Microfrontents]()
+        - [Scalability & Near real-time Analytics]()
+    - [Experience Subsystem Design & Components]()
+        - [Technical Architecture]()
+            - [Microfrontends]()
             - [Business/Domain Services]()
             - [Data Analytics & Insights]()
 - [Deployment Architecture]()
@@ -46,11 +46,11 @@ There are numerous ways to design systems, each with various approaches and plen
 
 #### Out of Scope
 
-Due to time constraintes, folloiwng topics are considered as out of scope,
+Due to time constraints, following topics are considered as out of scope,
 
 1. Data Migration & Cutover strategy could not be documented due to time constraints.
-2. Security Architecture is partially articulted.
-3. Machine Learning models & pipelines to detect anomolies and recommend actions are not captured due to time constraints.
+2. Security Architecture is partially articulated.
+3. Machine Learning models & pipelines to detect anomalies and recommend actions are not captured due to time constraints.
 
 #### Current Solution Limitations & Constraints
 
@@ -62,12 +62,12 @@ A quick recap of current system limitations,
 
 ### 🚩 Architecture Goals for To-Be Solution
 
-The overaching goals of re-architected solution are,
+The overarching goals of re-architected solution are,
 
-- **Multi-Tenant Model**: A true multi-tenant system with shared infrastrucutre across tenants with strong ```Tenant Isolation``` guardrails to deal with noisy neighbours while keeping data isolated.
-- **Scalablity & Elasticity**: Solution components should be horizontally scalable and leverage ```elasticity``` provided by underlying cloud platform. Should withstand bursty workloads during peak usage hours.
+- **Multi-Tenant Model**: A true multi-tenant system with shared infrastructure across tenants with strong ```Tenant Isolation``` guardrails to deal with noisy neighbours while keeping data isolated.
+- **Scalability & Elasticity**: Solution components should be horizontally scalable and leverage ```elasticity``` provided by underlying cloud platform. Should withstand burst workloads during peak usage hours.
 - **Event-driven Interactions**: Solution components should be loosely-coupled for ```resiliency``` and independently rollout features with increased frequencies. Also should enable parallel development with multiple teams.
-- **Resilient**: Solution component should be resilient to network glitches, hardware failure with 'no single-point failue' and be ```crash-tolerant``` with recoverability & f```ault-tolerant```.
+- **Resilient**: Solution component should be resilient to network glitches, hardware failure with 'no single-point failure' and be ```crash-tolerant``` with recoverability & ```fault-tolerant```.
 - **Cloud Agnostic** - Leverage mix of cloud agnostic & could-specific services.
 - **Security, Governance and compliance**: Adhere to global data localization privacy laws.
 
@@ -83,7 +83,7 @@ The main actors of the system could be,
 
 ### 🚞 Functional Requirements
 
-Only architecure significant system use cases and features were analyzed. The solution has below critical features for IT Help Desk and Ops. teams,
+Only architecture significant system use cases and features were analysed. The solution has below critical features for IT Help Desk and Ops. teams,
 
 **Digital Employee Experience Features**: 
 - Track a rich set of metrics like device health, OS, app performance, users, and network. Proactively identify issues, troubleshoot and remediate with automation. 
@@ -101,12 +101,12 @@ Aggregate and correlate data from multiple sources across your digital workspace
 
 ### ♨️ Non Functional Requirements
 
-Following non-fucntional requiremnts have been highlighted as critical to to-be solution,
+Following non-functional requirements have been highlighted as critical to to-be solution,
 
-- **Scalability & Elasiticity** - Components should be auto-scalable based on traffic patterns.
+- **Scalability & Elasticity** - Components should be auto-scalable based on traffic patterns.
 - **Tenant Isolation** - Data of each tenant is isolated and should have mechanism to deal with noisy neighbours.
-- **Availablity** - System components should be highly available across several geographies. _Is it 99.99% availability?_
-- **Performance** - Services should have low-latency and support high-throuput. Should accomodate burst workloads during peak hours. 
+- **Availability** - System components should be highly available across several geographies. _Is it 99.99% availability?_
+- **Performance** - Services should have low-latency and support high-throuput. Should accommodate burst workloads during peak hours. 
 - **Resiliency** - System component should be resilient to temporary glitiches and self-healing. Components should recover from crash
 - **Privacy & Data Localization** - Should complaint to GDPR and other privacy governance rules.
 
@@ -140,38 +140,38 @@ Assumption: 2000 events in a day ~ 2000 / 8 hours work ~ 250 per hour ~ 5 per mi
 | 500K Collectors | 👊 41k rps | 50k rps |
 | 1000 customers Collectors | 🚀🚀🚀 41 million rps | 50 million rps |
 
-### Data Modeling
+### Data Modelling
 
 A shared database & shared schema approach would be cost-effective solution for multi-tenant system with low maintenance. 
 
 With this every domain entity should have TenantID attribute, resulting every table having tennant_id column that indicates the owner of the row.
 
-Below ER diagram depicts few critical entitites in the solution,
+Below ER diagram depicts few critical entities in the solution,
 
 <img src="docs/images/data-model.jpg" width="45%" height="45%" alt="data model" />
 
-Enitities such as device performance, app performance, network performance includes three classes of columns **time, dimensions and metrics**.
+Entities such as device performance, app performance, network performance includes three classes of columns **time, dimensions and metrics**.
 - Combination of **tenant-id & timestamp** column is the primary partition mechanism. 
 - **Dimensions** are values that can be used to filter, query or group-by.
 - **Metrics** are values that can be aggregated, and are nearly always numeric.
 
-These entities can be ```modeled by data source``` over ```model by metrics```
+These entities can be ```modelled by data source``` over ```model by metrics```
 
-- **Modeling by data source** - Measurements of all metrics of the same data source at a certain time point are stored in the same row.
+- **Modelling by data source** - Measurements of all metrics of the same data source at a certain time point are stored in the same row.
 
 <img src="docs/images/m-by-source.jpg" width="70%" height="70%" />
 
-- **Modeling by Metrics** - odeling by metrics, where each row of data represents a measurement of a certain metric of a data source at a certain time point.
+- **Modelling by Metrics** - modelling by metrics, where each row of data represents a measurement of a certain metric of a data source at a certain time point.
 
 <img src="docs/images/m-by-metrics.jpg"  width="70%" height="70%" />
 
-> As **Clickhouse** underlying layer architecture adopts columnar storage and there is an index on each column, ```modeling by data source``` may be better.
+> As **Clickhouse** underlying layer architecture adopts columnar storage and there is an index on each column, ```modelling by data source``` may be better.
 
 > Storing multiple metric values on the same row may affect the query or filter efficiency on one of the metrics.
 
 ## 🏁 Solution Architecture
 
-Solution architecture borken down into two streams, namely,
+Solution architecture broken down into two streams, namely,
 
 1. Ingestion subsystem
 2. Digital Experiences subsystem 
@@ -183,9 +183,9 @@ The subsystem components are designed to,
 - Ensure very **low-latency** and **high-throughput**
 - Follows **Pub/Sub model** for scalability and handle **backpressure**
 - Processing of events should be **idempotent** and **crash-tolerant**
-- Resiliencey when services' crashes
+- Resiliency when services' crashes
 
-Ingestion mechanism supports in-steam trends/~~analytics~~ for SRE & Tech Ops teams to spot any anomolies and take corrective action.
+Ingestion mechanism supports in-steam trends/~~analytics~~ for SRE & Tech Ops teams to spot any anomalies and take corrective action.
 
 <img src="docs/images/Ingestion.jpg" width="100%" height="100%" alt="Ingestion Subsystem Architecture" />
 
@@ -196,8 +196,8 @@ Can't see diagram, click [Miro](https://miro.com/app/board/uXjVMsKyGeM=/?share_l
 #### 🎌 Ingestion Gateway
 
 Ingestion Gateway is a horizontally scalable bi-directional communication service to captures 'Collector Agent' emitter events/data, validates them and deliver to relevant Kafka topics to further processing. The validation includes,
-1. Authenticate Collector Agents through Client Certificates or other credentials/token-based mechnisms.
-2. De-compress, perfrom schema & semantic validation of Payloads along with JSON vulneriblity checks.
+1. Authenticate Collector Agents through Client Certificates or other credentials/token-based mechanisms.
+2. De-compress, perform schema & semantic validation of Payloads along with JSON vulnerability checks.
 3. Induce tracking/trace id (if not exists)
 4. Rate-limits (may require **Redis with sliding-window pattern**)
    
@@ -206,51 +206,51 @@ Ingestion Gateway is a horizontally scalable bi-directional communication servic
 - Gateway uses Kafka cluster acts as buffer layer to sustain **Backpressure**
 - Data can be batched to reduce round-trips.
 
-Gateway can be designed as Cloud-Native applciation and scaled through Kubernetes HPA. Other alternative is leverage open-source Gateways and tailor their capabilities by building custom plug-ins and extensions.
+Gateway can be designed as Cloud-Native application and scaled through Kubernetes HPA. Other alternative is leverage open-source Gateways and tailor their capabilities by building custom plug-ins and extensions.
 
 #### Scaling to 50+ million events
 
-Ingestion subsystem components should be extremely scalable to coup up with bursty workloads with low latency.
+Ingestion subsystem components should be extremely scalable to coup up with burst workloads with low latency.
 
-Multiple isloated clusters are needed to reduce impact to all customers when things go wrong. Traffic distribution across these clusters can be done through geo-location, by tenant or combination of both.
+Multiple isolated clusters are needed to reduce impact to all customers when things go wrong. Traffic distribution across these clusters can be done through geo-location, by tenant or combination of both.
 
 To process high-volume feeds, 
 - Gateway components are deployed to Kubernetes(K8s) cluster with horizontal Pod Autoscaler (HPA) based on throughput metrics.
-- Majority of processing should be don in-memory with NO blocking I/O.
+- Majority of processing should be done in-memory with NO blocking I/O.
 
 Processing of raw data is decoupled from capture for high-throughput. Backpressures due to downstream processing delays and database bottlenecks are handled through Kafka as buffer layer.
 
-**Alternatives**: :rocket: :rocket: :rocket: For extreme low-latency & high-throuput processing ```[Disruptor](https://lmax-exchange.github.io/disruptor/user-guide/index.html) aka. Ring Buffer ``` pattern can be employeed, but its too complex.
+**Alternatives**: :rocket: :rocket: :rocket: For extreme low-latency & high-throughput processing ```[Disruptor](https://lmax-exchange.github.io/disruptor/user-guide/index.html) aka. Ring Buffer ``` pattern can be employed, but its too complex.
 
 #### Scaling Kafka Cluster
 
 - Have multiple isolated Kafka clusters over single large Kafka cluster to avoid impact entire customer base.
-- Have more and more topic partitions for parallel processing with the In-Sync Replica set (ISR) set to at leaset 3 to avoid message losses during broker outages.
-- Add borkers dynamically based on request throughput.
+- Have more and more topic partitions for parallel processing with the In-Sync Replica set (ISR) set to at least 3 to avoid message losses during broker outages.
+- Add brokers dynamically based on request throughput.
 
 **Kafka Topic Strategy**
 For parallel processing, multiple Kafka topics with multiple partitions should be configured. Topics can be designed by tenant (or) by data/entity type (or) by function and more. Topic by tenant may not be ideal, when a new tenant is added new topics & partitions should be created along with consumers should be introduced.
 
-### 🏇 Streaming Apps & Near-realtime Trends ~~Analytics~~
+### 🏇 Streaming Apps & Near-Realtime Trends ~~Analytics~~
 
 Streaming apps will process incoming data/events to,
 
-1. Detect anomolies
-2. Alert & Notify customers for any anolomies
+1. Detect anomalies
+2. Alert & Notify customers for any anomalies
 3. Observe metrics (throughput and latencies) and take corrective actions.
 
-A dashobard for Tech. Ops. teams to monitor health of Ingestion Processing pipline. Use internal anlytics visualization tools such as Grafana tool for this.
+A dashboard for Tech. Ops. teams to monitor health of Ingestion Processing pipeline. Use internal analytics visualization tools such as Grafana tool for this.
 
 ### Ingestion Processors (Microservices)
 
 A set of Self Contained Services (Microservices) are deployed to,
-- De-duplication of raw data (We can emply '**Rotating Bloom Filters**')
+- De-duplication of raw data (We can employ '**Rotating Bloom Filters**')
 - Enrich data before storing into Clickhouse
 - Transform into query-friendly DB format
 
-These Microservices are Kafka consumers and auto-scaled through K8s HPA. They have their own database schema hosted on shared AWS RDS PostgreSQL (Is DB requried?).
+These Microservices are Kafka consumers and auto-scaled through K8s HPA. They have their own database schema hosted on shared AWS RDS PostgreSQL (Is DB required?).
 
-There could be need to capture raw data for audits, simulate loads for Peformance & Volume testing during dress reherrsals.
+There could be need to capture raw data for audits, simulate loads for Performance & Volume testing during dress rehearsals.
 
 **Scaling Processors aka. Kafka Consumers**
 
@@ -260,22 +260,22 @@ Kafka Consumers can be auto-scaled through Kubernetes Operators which act as aut
 
 <img src="docs/images/portal.jpg" width="100%" height="100%" alt="Portal & Business service Components" />
 
-Portal subsystem adops multi-tiered & multi-layer technical architecture. Primarly includes following modules with their own technology stack,
-- UI/UX - SPA Microfrontends
+Portal subsystem adopts multi-tiered & multi-layer technical architecture. Primarily includes following modules with their own technology stack,
+- UI/UX - SPA Micro frontends
 - Business/Domain Services & API
 - Data Analytics & Insights Engine
 
 ### SPA Microfrontents
 
-Product functionality is delivered as a Single-Page Applictions (SPA) which includes muliple modules,
+Product functionality is delivered as a Single-Page Applications (SPA) which includes multiple modules,
 
 - Digital Experiences
 	- Employee Experience
-   	- Application & Engagment Experience
-   	- Collobaration Experience 
+   	- Application & Engagement Experience
+   	- Collaboration Experience 
 - Administration Console
-	- Device Managment
- 	- Application Managment
+	- Device Management
+ 	- Application Management
   	- Surveys & Remote Actions
 - Near-Realtime Business Insights Dashboard
 
@@ -289,13 +289,13 @@ Below diagram depicts Microfrontends strategy.
 
 <img src="docs/images/microfrontends.jpg" width="40%" height="40%" alt="Microfrontends">
 
-<img src="docs/images/tech-stack.jpg" width="40%" height="40%" alt="Tecnology Stack">
+<img src="docs/images/tech-stack.jpg" width="40%" height="40%" alt="Technology Stack">
 
 ##### Scaling Microfrontends
 
-- Adopt build-time integration for intergating different microfronted modules along with shared component libraries.
-- Micro-frontends should be designed stateless, adopt distribured cache.
-- Leverage CloudFront/Cloudflare and ALB to loadbalance traffic across multiple instances and adopt K8s Horizontal Pod Scaler (HPA).
+- Adopt build-time integration for integrating different microfronted modules along with shared component libraries.
+- Micro-frontends should be designed stateless, adopt distributed cache.
+- Leverage CloudFront/Cloudflare and ALB to load balance traffic across multiple instances and adopt K8s Horizontal Pod Scaler (HPA).
 
 ### Business/Domain Services & APIs
 
@@ -306,13 +306,13 @@ Reactor existing 'Engine' functionality into multiple domain-specific microservi
 
 | Microservice | Role & Responsibilities|
 | --- | --- |
-| Digital Experience API | Provides insights into Application Experience, Product Experience and Collobaration Expierence. |
+| Digital Experience API | Provides insights into Application Experience, Product Experience and Collaboration Experience. |
 | Remote Actions | Trigger actions on user device, trigger surveys, and more |
-| Query Engine | A DSL base query generator, processor and executor aganist domain entities. |
+| Query Engine | A DSL base query generator, processor and executor against domain entities. |
 | Integration Platform Services | A centralized orchestration engine with independent tasks and workflow.    |
 | Others | ... |
 
-Each of these services will have their own databases where process state-machine informaiton and metadata is stored. The insights are sourced from Clickhouse database.
+Each of these services will have their own databases where process state-machine information and metadata is stored. The insights are sourced from Clickhouse database.
 
 ### Tenant Isolation
 
@@ -322,21 +322,21 @@ Every component in solution ecosystem should be **Tenant Aware**.
 	- Tenant ID can be detected from URL Path or from Domain Name (e.g., https://???.nexthink.com/)
 	- Can be from custom Http header like **X-TENANT-ID**
    	- Or from JWT token claims
-- Propagate TenantID across inter system communcation through HTTP headers X-TENANT-ID
+- Propagate TenantID across inter system communication through HTTP headers X-TENANT-ID
 	- Extract TenantID, create TenantContext, make it available to local threads.
-- Make tenant-specific Data Soures or Connection Pools.
+- Make tenant-specific Data Sources or Connection Pools.
 - Implement tenant level rate-limits to avoid Noisy Neighbours.
 - Leverage **PostgreSQL Row-Level Security** feature for tenant level data access constraints & isolation.
 
-#### Service-to-Service Communincaitons
+#### Service-to-Service Communications
 
-Service to service communication is through event-driven mechanism over a pub/sub channel. Each each service emits events which are subscribed by other services to perform the actions. For example, digital experience service can emit notification or action events which are subsribed by Remote Actions service to delevier to user.
+Service to service communication is through event-driven mechanism over a pub/sub channel. Each service emits events which are subscribed by other services to perform the actions. For example, digital experience service can emit notification or action events which are subscribed by Remote Actions service to deliver to user.
 
 > Employ resiliency techniques ( Retry ( Rate Limiter ( Circuit Breaker ( Timeout ( Bulkhead ( Function() ) ) ) ) )
 
-Adopt gRPC for internal API innovocations with Google Proto Buffers.
+Adopt gRPC for internal API invocations with Google Proto Buffers.
 
-##### Peer-to-Peer Choregraphy & Centralized Workflow/Orchestration Engine
+##### Peer-to-Peer Choreography & Centralized Workflow/Orchestration Engine
 
 Peer-to-peer task choreography using Pub/sub model works for simplest flows, but this approach has following issues:
 - Process flows are “embedded” within the code of multiple microservices
@@ -357,7 +357,7 @@ Hence a centralized Orchestration Engine is also needed to orchestrate microserv
 
 ### 📊 Data Analytics & Insights
 
-Operational insights from device performance, app performance and product performance is critical to define employee, app and colloboration experience. 
+Operational insights from device performance, app performance and product performance is critical to define employee, app and collaboration experience. 
 
 Turn raw data which are collection of facts into actionable insights. Analyse raw data for data-driven insights in the form of patterns, trends, groups, segments to answer certain types of questions. 
 
@@ -376,7 +376,7 @@ Build Data Processing Jobs which perform SQL tasks & ~~MapReduce~~ tasks to anal
 Ref: [Why Not Use Something Like MapReduce?](https://clickhouse.com/docs/en/faq/general/mapreduce)
 
 - Leverage techniques such as Downsampling through rollups were converting high-resolution time series data into low-resolution time series data.
-- Liverage Clickhouse ```compression``` mechanism to reduce disk I/O.
+- Leverage Clickhouse ```compression``` mechanism to reduce disk I/O.
 - Build materialized views, which can reduce query times by precomputing frequently accessed data. Materialized views are precomputed views that are stored as tables in ClickHouse.
 - Scale out Clickhouse clusters as advised by [Clickhouse Scale out Notes](https://clickhouse.com/docs/en/architecture/horizontal-scaling)
 
@@ -389,28 +389,28 @@ Create materialized views, when creating materialized views consider using a que
 
 ### Performance Assurance
 
-> Due to time constraints, could not document Performance & Volume testing strategy wherein how services validated to meet non-functional requirments such as Reliability, Throughput, Availability & Resiliency.
+> Due to time constraints, could not document Performance & Volume testing strategy wherein how services validated to meet non-functional requirements such as Reliability, Throughput, Availability & Resiliency.
 
 ### Security & Privacy
 
 #### Authentication & Authorization
 
-> Due to time constraints, could not come up with a diagram that depicts, how Confidentiality, Integrity, Availablity (CIA) among all comunicating involoved in entire solution.
+> Due to time constraints, could not come up with a diagram that depicts, how Confidentiality, Integrity, Availability (CIA) among all communications involved in entire solution.
 
 **Collector Authentication**
 
-Collector & Ingestion Gateway will follow mutual authentication based on PKI certifcates. During provisioning of a collector on end-device, an identity and PKI certificates are injected.  
+Collector & Ingestion Gateway will follow mutual authentication based on PKI certificates. During provisioning of a collector on end-device, an identity and PKI certificates are injected.  
 
-Certficates can be rotated when employeed logged on to network through end-device management mechanisms. Identity & Access management module has to block any comprmised devices where intruder can take over identity and PKI certificates.
+Certificates can be rotated when employed logged on to network through end-device management mechanisms. Identity & Access management module has to block any compromised devices where intruder can take over identity and PKI certificates.
 
-All internal and external communciations will be done through secure channel mostly TLS.
+All internal and external communications will be done through secure channel mostly TLS.
 
 **Experience Portal & Admin Console Authentication Mechanism**
 
 A multi-factor authentication (MFA) should be established for accessing SaaS application & services.
 
-**API Communcation**
-- For Public APIs, OAuth based client & secret based mechnism would be ideal.
+**API Communication**
+- For Public APIs, OAuth based client & secret based mechanism would be ideal.
 - Fore internal APIs, mTLS is right option along with Tenant ID propagation through (X-Tenant-ID) and other mechanisms.
 
 #### Privacy & Data Residency
@@ -419,8 +419,8 @@ Globally, data localization rules are not uniform and many countries have adopte
 
 > A copy of the data must be stored locally, unless an exception applies. Cross border transfers are permitted unless an exception applies.
 
-- Deploy few fronend/gateway components across multiple geo locations to store a copy of data, before it cross boarders.
-- Leverage GSLB & CDN's geo-proximity based routing capabilities to direct traffic right data center.
-- Implement mechnisms to detect and deleted "Data Subject Rights" using 3rd party tools.
+- Deploy few frontend/gateway components across multiple geo locations to store a copy of data, before it cross boarders.
+- Leverage GSLB & CDN's geo-proximity based routing capabilities to direct traffic right data centre.
+- Implement mechanisms to detect and deleted "Data Subject Rights" using 3rd party tools.
 
 :pray: :pray: :pray:
