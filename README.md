@@ -232,27 +232,43 @@ Product functionality is delivered as a Single-Page Applictions (SPA) which incl
 
 The UI/UX functionalities are built as ```Micro-frontends``` for accelerated delivery through parallel development practices.
 
-#### Techincial Architecture & Tech Choices
+#### Microfrontends & Tech. Stack
 
-### Business/Domain Services
+Microfrontends approach enables scaling frontend development simultaneously across many teams for a large and complex product. 
 
-Reactor existing 'Engine' functionality into multiple domain-specific microservices aka. Cloud-Native apps. Cloud native apps can exploit scale, elasticity, resiliency, and flexibility provided by in public clouds. Inviddual teams can work on these microservices and rollout new functionality quickly.
+Below diagram depicts Microfrontends strategy.
+
+<img src="docs/images/microfrontends.jpg" width="20%" height="20%" alt="Microfrontends">
+
+<img src="docs/images/tech-stack.jpg" width="20%" height="20%" alt="Tecnology Stack">
+
+##### Scaling Microfrontends
+
+- Adopt build-time integration technique for intergating different modules with shared component libraries.
+- Micro-frontends should be designed stateless with distribured cache.
+- Leverage CloudFront/Cloudflare and ALB to loadbalance across multiple instances and K8s Horizontal Pod Scaler (HPA).
+
+### Business/Domain Services & APIs
+
+Reactor existing 'Engine' functionality into multiple domain-specific microservices aka. Cloud-Native apps. Cloud native apps can exploit scale, elasticity, resiliency, and flexibility provided by in public clouds. Individual teams can work on these microservices and rollout new functionality quickly.
 
 - The services should be designed as a self contained services or microservices, packed as containers for portability, deployed to immutable infrastructure.
 - Microservices communicate with each other via APIs and use event-driven architecture, which makes them loosely coupled, serves to enhance the overall performance of each application.
 
 | Microservice | Role & Responsibilities|
 | --- | --- |
-| Digital Experience API | ? |
-| Remote Actions | ? |
-| Query Engine | ? |
-| Integration Platform Services | ? |
+| Digital Experience API | Provides insights into Application Experience, Product Experience and Collobaration Expierence. |
+| Remote Actions | Trigger actions on user device, trigger surveys, and more |
+| Query Engine | A DSL base query generator, processor and executor aganist domain entities. |
+| Integration Platform Services | A centralized orchestration engine with independent tasks and workflow.    |
 
 Each of these services will have their own databases where process state-machine informaiton and metadata is stored. The insights are sourced from Clickhouse database.
 
-#### Internal Communincaitons
+#### Service-to-Service Communincaitons
 
-Services are communicate through event-driven mechanism over a pub/sub channel. Each each service emits events which are subscribed by other services to perform the actions. For example, digital experience service can emit notification events which are subsribed by Remote Actions service to delevier to user. 
+Services are communicate through event-driven mechanism over a pub/sub channel. Each each service emits events which are subscribed by other services to perform the actions. For example, digital experience service can emit notification events which are subsribed by Remote Actions service to delevier to user.
+
+> Employ resiliency techniques ( Retry ( Rate Limiter ( Circuit Breaker ( Timeout ( Bulkhead ( Function() ) ) ) ) )
 
 ##### Peer-to-Peer Choregraphy & Centralized Workflow/Orchestration Engine
 
@@ -264,9 +280,9 @@ Peer to peer task choreography using Pub/sub model works for simplest flows, but
 Hence a centralized Orchestration Engine is also needed to orchestrate microservices-based process flows.
 - Each task in process or business flows are implemented as microservices.
 
-### Technical Architecture
+### Technology Choices & Tech. Stack
 
-### Technology Choices & Tech Stack
+#### Scaling 
 
 ### 📊 Data Analytics & Insights
 
