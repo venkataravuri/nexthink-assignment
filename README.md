@@ -343,22 +343,23 @@ Peer-to-peer task choreography using Pub/sub model works for simplest flows, but
 - As the number of microservices grow and the complexity of the processes increases, getting visibility into these distributed workflows becomes difficult without a central orchestrator.
 - Cannot answer "How much progress made in workflow? How many steps were complete?"
 
-Hence a centralized Orchestration Engine is also needed to orchestrate microservices-based process flows.
-- Each task in process or business flows are implemented as microservices.
+Hence a centralized Orchestration Engine is also needed to orchestrate microservices-based process flows. 
+
+<img src="docs/images/orchestrator.png"  width="40%" height="40%" />
 
 ### Technology Choices & Tech. Stack
 
 #### Scaling Microservices
 
 - Horizontally scale microservices using Kubernetes HPA feature.
-- Use Redis clusters for metadata and state machine information using ```cache-aside``` pattern.
+- Use Redis clusters for metadata and state machine caching using ```cache-aside``` pattern.
 - Employ event-driven asynchronous communication mechanism where customer/user is not awaiting for immediate response.
 
 ### 📊 Data Analytics & Insights
 
-Operational insights from device, app, product performance is critical to define employee, app and colloboration experience. 
+Operational insights from device performance, app performance and product performance is critical to define employee, app and colloboration experience. 
 
-Turn raw data which is a collection of facts into actionable insights. Analyse raw data for data-driven insights in the form of patterns, trends, groups, segments to answer certain types of questions. 
+Turn raw data which are collection of facts into actionable insights. Analyse raw data for data-driven insights in the form of patterns, trends, groups, segments to answer certain types of questions. 
 
 Follow below 5-step process to derive insights, metrics aka. KPIs.
 
@@ -421,3 +422,5 @@ Globally, data localization rules are not uniform and many countries have adopte
 - Deploy few fronend/gateway components across multiple geo locations to store a copy of data, before it cross boarders.
 - Leverage GSLB & CDN's geo-proximity based routing capabilities to direct traffic right data center.
 - Implement mechnisms to detect and deleted "Data Subject Rights" using 3rd party tools.
+
+:pray: :pray: :pray:
