@@ -8,8 +8,8 @@
 
 This document captures **high-level solution architecture** of re-engineered and re-architected solution that replaces existing single-tenant monolith solution with a **:rocket: scalable, :wavy_dash: elastic & :office: a multi-tenant solution**.
 
-- It explains :ferris_wheel: **To-Be Architecture** through various reference architecture models & views such as ```Functional Architecture, Technical Architecture, Deployment Architecture, Component Designs, Technology Choices and more```, each addressing unique concerns of various stakeholders & audience.
-- It also highlights how the proposed solution addresses limitations & constraints for current system.
+- Explains :ferris_wheel: **To-Be Architecture** through various reference architecture models & views such as ```Functional Architecture, Technical Architecture, Deployment Architecture, Component Designs, Technology Choices and more```, each addressing unique concerns of various stakeholders & audience.
+- Highlights how the proposed solution addresses limitations & constraints for current system.
 
 Refer to :question: problem statement [Nexthink Architecture Quiz]() for current system contraints and goals of proposed solution.
 
@@ -126,7 +126,7 @@ Data volume per day 	~ (Data size per day by a collector) * (# of collectors) * 
 			~ 👊 4,768 TB (Or) 4.6 PB
 ```
 
-> Note: It is unclear that data capture is compressed or not.
+> Note: It is unclear that data captured is compressed or not.
 
 **🚖 Traffic Estimates**
 
@@ -146,6 +146,10 @@ A shared database & shared schema approach would be cost-effective solution for 
 
 With this every domain entity should have TenantID attribute, resulting every table having tennant_id column that indicates the owner of the row.
 
+Below ER diagram depicts few critical entitites in the solution,
+
+<img src="docs/images/data-model.jpg" width="35%" height="35%" alt="data model" />
+
 Enitities such as device performance, app performance, network performance includes three classes of columns **time, dimensions and metrics**.
 - Combination of **tenant-id & timestamp** column is the primary partition mechanism. 
 - **Dimensions** are values that can be used to filter, query or group-by.
@@ -156,9 +160,9 @@ These entities can be ```modeled by data source``` over ```model by metrics```
 - **Modeling by data source** - Measurements of all metrics of the same data source at a certain time point are stored in the same row.
 - **Modeling by Metrics** - odeling by metrics, where each row of data represents a measurement of a certain metric of a data source at a certain time point.
 
-Below ER diagram depicts few critical entitites in the solution,
+> As **Clickhouse** underlying layer architecture adopts columnar storage and there is an index on each column, ```modeling by data source``` may be better.
 
-<img src="docs/images/data-model.jpg" width="35%" height="35%" alt="data model" />
+> Storing multiple metric values on the same row may affect the query or filter efficiency on one of the metrics.
 
 ## 🏁 Solution Architecture
 
