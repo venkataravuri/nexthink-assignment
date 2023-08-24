@@ -2,21 +2,22 @@
 
 # 🔥 Nexthink Interview Assignment 🎉
 
-Assignment response is documented in my personal Github repository at using Markdown language, 🌎 ⚓ https://github.com/venkataravuri/nexthink-assignment/
+> Refer to :globe_with_meridians: [My Github Repo](https://github.com/venkataravuri/nexthink-assignment/) for a latest copy of assignment response. Document is composed using Github's Markdowns.
 
-### 🚁 Quick Overview
+## 🚁 Quick Overview
 
-A high-level architecture of alternative forward-looking solution that replaces existing single-tenant solution with a scalable & elastic multi-tenant solution. It also highlights how the proposed solution addresses limitations & constraints for current system with a re-engineered and re-architected solution.
+This document captures **high-level solution architecture** of re-engineered and re-architected solution that replaces existing single-tenant monolith solution with a **:rocket: scalable, :wavy_dash: elastic & :office: a multi-tenant solution**.
 
-Refer to assignment problem statement [Nexthink Architecture Quiz]() for existing system contraints and goals of prposed solution.
+- It explains :ferris_wheel: **To-Be Architecture** through various models/views ```Functional Architecture, Technical Architecture, Deployment Architecture, Component Designs, Technology Choices and more```, each addressing unique concerns of various stakeholders & audience.
+- It also highlights how the proposed solution addresses limitations & constraints for current system.
 
-The 🎡 **to-be architecture** is explained through ```Functional Architecture, Technical Architecture, Component Designs, Deployment Architecture and more```, each addressing unique concerns for distinct stakeholders & audience.
-
-> While proposing solution, I made plenty of assumptions, also highlighed rationale behind those assumptions.
+Refer to problem statement [Nexthink Architecture Quiz]() for current system contraints and goals of prposed solution.
 
 ‼️ **Disclaimer**
 
-System design & architecture has many approaches and alternatives, approaches that I took in prposed solution is soley based on assignment instructions with narrow descriptions. Hence, it could be changed based on understand use cases in depth. Architecure is about "Trade-offs" along with several dimensions scalability, reliability, throughput, cost-effectivness and more. Proposed architecture best of everything.  
+> While proposing solution, I made plenty of assumptions, also highlighed rationale behind those assumptions.
+
+Systems can be designed in many ways and has plenty alternatives, approaches that I took here considers _industry-standard practices, tools, resource constraints_ and more. More over **Architecure is about making "Trade-offs"** along the dimensions of scalability, reliability, throughput, cost-effectivness and more. Proposed architecture is best of everything.  
 
 ### 📚 Table of Contents
 - [Assumptions]() & [Out of Scope]()
@@ -47,28 +48,24 @@ System design & architecture has many approaches and alternatives, approaches th
 
 Due to time constraintes, folloiwng topics are considered as out of scope,
 
-1. Only high-level migration strategy has ebee captured, but not includes Data Migration and component by component cut-over strategy.
-2. ?
+1. Data Migration & Cutover strategy could not be documented due to time constraints.
+2. Security Architecture is partially articulted.
 3. ?
 
 #### Current Solution Limitations & Constraints
 
-#### To-Be Architecture & Solution
+A quick recap of current system limitations,
 
-Re-engineer & refactor existing components to pave-a-way for a true multi-tenant solution which is resilient, crash & fault tolerant and extremely scalable.
-
-### 🚩 High-level Architecture Goals
+### 🚩 Architecture Goals of To-Be Solution
 
 The overaching goals of re-architected solution are,
 
-1. **Multi-Tenant Model**: All customers (aka. tenants) shared infrastrucutre with strong ```Tenant Isolation``` with guardrails to deal with noisy neighbours while keeping their data isolated.
-2. **Scalablity & Elasticity**: Solution components should be horizontally scalable and leverage elasticity provided by underlying cloud platform. Should withstand bursty workloads during peak usage hours.
-4. **Event-driven Interactions**: Solution components should be loosely coupled for resiliency and independently deployable with different frequencies. Also should enable parallel development with multiple teams working across
-5. Resilient: Solution component should be resilient to network glitches, hardware failure with 'no single-point failue' and be crash-tolerant wit recoverability & fault-tolerant.
-
-Leverage mix of cloud agnostic & could-specific services 
-
-3. **Security, Governance and compliance**: Able to 
+- **Multi-Tenant Model**: All customers (aka. tenants) shared infrastrucutre with strong ```Tenant Isolation``` with guardrails to deal with noisy neighbours while keeping their data isolated.
+- **Scalablity & Elasticity**: Solution components should be horizontally scalable and leverage elasticity provided by underlying cloud platform. Should withstand bursty workloads during peak usage hours.
+- **Event-driven Interactions**: Solution components should be loosely coupled for resiliency and independently deployable with different frequencies. Also should enable parallel development with multiple teams working across
+- **Resilient**: Solution component should be resilient to network glitches, hardware failure with 'no single-point failue' and be crash-tolerant with recoverability & fault-tolerant.
+- **Cloud Agnostic** - Leverage mix of cloud agnostic & could-specific services 
+- **Security, Governance and compliance**: Adhere to global data localization privacy laws.
 
 ### 🌈 Functional Analysis & Design
 
