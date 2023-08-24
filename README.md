@@ -32,7 +32,7 @@ There are numerous ways to design systems, each with various approaches and plen
         - [Streaming Apps & Near-Realtime Trends](#-streaming-apps--near-realtime-trends-analytics)
         - [Ingestion Processors (Microservices)](#ingestion-processors-microservices)
     - [Digital Experience Portals Subsystem Architecture](#-digital-experience-portal-subsystem-architecture)
-      - [SPA Microfrontents](#spa-microfrontents)
+      - [SPA & Microfrontends](#spa-microfrontents)
         - [Microfrontends & Tech. Stack](#microfrontends--tech-stack)
       - [Business/Domain Services & APIs](#businessdomain-services--apis)
         - [Tenant Isolation](#tenant-isolation)
@@ -272,7 +272,7 @@ Portal subsystem adopts multi-tiered & multi-layer technical architecture. Prima
 - Business/Domain Services & API
 - Data Analytics & Insights Engine
 
-### SPA Microfrontents
+### SPA Microfrontends
 
 Product functionality is delivered as a Single-Page Applications (SPA) which includes multiple modules,
 
