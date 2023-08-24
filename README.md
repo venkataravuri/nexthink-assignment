@@ -67,7 +67,7 @@ The overaching goals of re-architected solution are,
 - **Cloud Agnostic** - Leverage mix of cloud agnostic & could-specific services 
 - **Security, Governance and compliance**: Adhere to global data localization privacy laws.
 
-### 🌈 Functional Analysis & Design
+## 🌈 Functional Analysis & Design
 
 The main actors of the system could be,
 1. Organization employees
@@ -77,7 +77,7 @@ The main actors of the system could be,
 5. Device & Peripheral Providers
 6. System Administrators
 
-#### 🚞 Functional Requirements
+### 🚞 Functional Requirements
 
 Only architecure significant system use cases and features are analyzed,
 
@@ -97,7 +97,7 @@ System Administrators should be able to,
 **Actionable Insights**
 Aggregate and correlate data from multiple sources across your digital workspace to visualize environment KPIs, understand trends and gain meaningful insights.
 
-#### ♨️ Non Functional Requirements
+### ♨️ Non Functional Requirements
 
 Following non-fucntional requiremnts have been highlighted as critical to to-be solution [Few assumed by nature of the solution],
 
@@ -110,7 +110,7 @@ Following non-fucntional requiremnts have been highlighted as critical to to-be 
 
 RTO & RPO of the system services not specified, however it is assumed thety will be stringent as critical to businesses.
 
-#### ✈️ Data Volumes & Traffic Projections 🎢
+### ✈️ Data Volumes & Traffic Projections 🎢
 
 Below is quick estimate of capacity and projected traffic volumes. This information will help Infra & DevOps teams to size the infrastructure capacity to coup peak traffic scenarios. Also acts as inputs to Performance and Volume testing aka. Load Testing.
 
@@ -211,9 +211,28 @@ There could be raw data capture service for audits, compliance and future legal 
 
 <img src="docs/images/portal.jpg" width="100%" height="100%" alt="Portal & Business service Components" />
 
-### SPA & Microfrontents
+Portal subsystem adops multi-tiered & multi-layer technical architecture. Primarly includes following modules with their own technology stack,
+- UI/UX - SPA Microfrontends
+- Business/Domain Services & API
+- Data Analytics & Insights Engine
 
-Refer to section '' for Layered Techincal Architecture.
+### SPA Microfrontents
+
+Product functionality is delivered as a Single-Page Applictions (SPA) which includes muliple modules,
+
+- Digital Experiences
+	- Employee Experience
+   	- Application & Engagment Experience
+   	- Collobaration Experience 
+- Administration Console
+	- Device Managment
+ 	- Application Managment
+  	- Surveys & Remote Actions
+- Near-Realtime Business Insights Dashboard
+
+The UI/UX functionalities are built as ```Micro-frontends``` for accelerated delivery through parallel development practices.
+
+#### Techincial Architecture & Tech Choices
 
 ### Business/Domain Services
 
@@ -248,7 +267,6 @@ Hence a centralized Orchestration Engine is also needed to orchestrate microserv
 ### Technical Architecture
 
 ### Technology Choices & Tech Stack
-
 
 ### 📊 Data Analytics & Insights
 
