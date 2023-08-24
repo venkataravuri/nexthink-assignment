@@ -316,5 +316,10 @@ A multi-factor authentication (MFA) should be established for accessing SaaS app
 
 #### Privacy & Data Residency
 
+Globally, data localization rules are not uniform and many countries have adopted their own laws which can vary based on the types of personal data covered and the scope of their respective requirements. GDPR, California Consumer Privacy Act (CCPA), Russia, India and other countries different data localization and residency laws. Most of the laws enforce,
 
+> A copy of the data must be stored locally, unless an exception applies. Cross border transfers are permitted unless an exception applies.
 
+- Deploy few fronend/gateway components across multiple geo locations to store a copy of data, before it cross boarders.
+- Leverage GSLB & CDN's geo-proximity based routing capabilities to direct traffic right data center.
+- Implement mechnisms to detect and deleted "Data Subject Rights" using 3rd party tools.
