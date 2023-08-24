@@ -50,7 +50,7 @@ Due to time constraintes, folloiwng topics are considered as out of scope,
 
 1. Data Migration & Cutover strategy could not be documented due to time constraints.
 2. Security Architecture is partially articulted.
-3. ?
+3. Machine Learning models & pipelines to detect anomolies and recommend actions are not captured due to time constraints.
 
 #### Current Solution Limitations & Constraints
 
@@ -138,6 +138,25 @@ Assumption: 2000 events in a day ~ 2000/8 ~ 5
 | 500K Collectors | 👊 2.5 million rps/min | ? |
 | 1000 customers Collectors | 🚀🚀🚀 2.5 billion rps/min | ? |
 
+### Data Modeling
+
+A shared database & shared schema approach would be ideal for given use cases. Wherein tenants' data is separated by a column in each table (could be TenantId), that shows the owner of the row.
+
+Every domain entity information includes three classes of columns **time, dimensions and metrics**.
+- Combination of **tenant-id & timestamp** column is the primary partition mechanism. 
+- **Dimensions** are values that can be used to filter, query or group-by.
+- **Metrics** are values that can be aggregated, and are nearly always numeric.
+
+Entities are ```modeled by data source``` over ```model by metrics```
+
+Modeling by Metrics - Measurements of all metrics of the same data source at a certain time point are stored in the same row.
+
+Modeling by Metrics - odeling by metrics, where each row of data represents a measurement of a certain metric of a data source at a certain time point.
+
+Below ER diagram depicts few critical entitites in the solution,
+
+<img src="docs/images/data-model.jpg" width="35%" height="35%" alt="data model" />
+
 ## 🏁 Solution Architecture
 
 Solution architecture borken down into two streams, namely,
@@ -175,18 +194,34 @@ Ingestion Gateway is a horizontally scalable bi-directional communication servic
 - Gateway uses Kafka cluster acts as buffer layer to  Backpressure
 - Batched 
 
-#### Scaling to ?? millions events
+#### Scaling to 2.5 billion events
 
-To handle bursty workloads & latency-sensitive workloads, Gateway components are deployed to Kubernetes(K8s) cluster with horizontal Pod Autoscaler (HPA) based on throughput metrics.
+Ingestion subsystem components should be extremely scalable to coup up with bursty workloads with low latency.
 
-Processing of raw data is des-coupled from capture for high-throughput. Backpressures due to downstream processing delays and database bottlenecks are handled through Kafka as buffer layer.
+Multiple isloated clusters are needed to reduce impact to all customers when things go wrong. Traffic distribution across these clusters can be done through geo-location, by tenant or combination of both.
 
-**Alternatives**: For extreme low-latency processing ```Disruptor``` pattern can be employeed, but its too complex.
+To process high-volume feeds, 
+- Gateway components are deployed to Kubernetes(K8s) cluster with horizontal Pod Autoscaler (HPA) based on throughput metrics.
+- Majority of processing should be don in-memory with NO blocking I/O.
+
+Processing of raw data is decoupled from capture for high-throughput. Backpressures due to downstream processing delays and database bottlenecks are handled through Kafka as buffer layer.
+
+**Alternatives**: :rocket: :rocket: :rocket: For extreme low-latency & high-throuput processing ```[Disruptor](https://lmax-exchange.github.io/disruptor/user-guide/index.html) aka. Ring Buffer ``` pattern can be employeed, but its too complex.
+
+#### Scaling Kafka Cluster
+
+- Have multiple isolated Kafka clusters to avoid impact entire customer base.
+- Have more topic partitions for parallel processing with the In-Sync Replica set (ISR) set to at leaset 3 to avoid message losses during broker outage.
+- Add borkers dynamically based on request throughput.
+
+**Scaling Consumers**
+
+Consumers should be auto-scaled through Kubernetes Operators in auto-pilot mode.
 
 **Kafka Topic Strategy**
 For parallel processing, multiple Kafka topics with partitions should be introduced. Topics can be designed by tenant or by data/entity type or by function and more. Topic by tenant may not be ideal, when a new tenant is added new topics & partitions should be created along with consumers should be introduced.
 
-### 🏇 Streaming Apps & Near-realtime Analytics
+### 🏇 Streaming Apps & Near-realtime Trends ~~Analytics~~
 
 Streaming apps will process incoming data/events to,
 
@@ -194,7 +229,7 @@ Streaming apps will process incoming data/events to,
 2. Alert & Notify customers for any anolomies
 3. Observe metrics (throughput and latencies) and take corrective actions.
 
-A dashobard for Tech. Ops. teams to monitor health of Ingestion Processing pipline.
+A dashobard for Tech. Ops. teams to monitor health of Ingestion Processing pipline. Use internal anlytics visualization tools such as Grafana tool for this.
 
 ### Ingestion Processors (Microservices)
 
@@ -275,16 +310,22 @@ Services are communicate through event-driven mechanism over a pub/sub channel. 
 Peer to peer task choreography using Pub/sub model works for simplest flows, but this approach has following issues:
 - Process flows are “embedded” within the code of multiple microservices
 - As the number of microservices grow and the complexity of the processes increases, getting visibility into these distributed workflows becomes difficult without a central orchestrator.
-- Cannot answer "How much are we done with process X"?
+- Cannot answer "How much progress made in workflow? How many steps were complete?"
 
 Hence a centralized Orchestration Engine is also needed to orchestrate microservices-based process flows.
 - Each task in process or business flows are implemented as microservices.
 
 ### Technology Choices & Tech. Stack
 
-#### Scaling 
+#### Scaling Microservices
+
+- Horizontally scale microservices using Kubernetes HPA feature.
+- Use Redis clusters for metadata and state machine information using ```cache-aside``` pattern.
+- Employ event-driven asynchronous communication mechanism where customer/user is not awaiting for immediate response.
 
 ### 📊 Data Analytics & Insights
+
+Operational insights from device, app, product performance is critical to define employee, app and colloboration experience. 
 
 Turn raw data which is a collection of facts into actionable insights. Analyse raw data for data-driven insights in the form of patterns, trends, groups, segments to answer certain types of questions. 
 
@@ -296,32 +337,22 @@ Follow below 5-step process to derive insights, metrics aka. KPIs.
 4. Build advanced analytics models 
 5. Constitute this process.
 
-### Data Modeling
+##### Data Analytics Jobs
 
-A shared database & shared schema approach would be ideal for given use cases. Wherein tenants' data is separated by a column in each table (could be TenantId), that shows the owner of the row.
+Build Data Processing Jobs which perform SQL tasks & ~~MapReduce~~ tasks to analyze data patterns, trends, groups, segments to answer certain types of questions.
 
-Every domain entity information includes three classes of columns **time, dimensions and metrics**.
-- Combination of **tenant-id & timestamp** column is the primary partition mechanism. 
-- **Dimensions** are values that can be used to filter, query or group-by.
-- **Metrics** are values that can be aggregated, and are nearly always numeric.
+Ref: [Why Not Use Something Like MapReduce?](https://clickhouse.com/docs/en/faq/general/mapreduce)
 
-Entities are ```modeled by data source``` over ```model by metrics```
+- Leverage techniques such as Downsampling through rollups were converting high-resolution time series data into low-resolution time series data.
+- Liverage Clickhouse ```compression``` mechanism to reduce disk I/O.
+- Build materialized views, which can reduce query times by precomputing frequently accessed data. Materialized views are precomputed views that are stored as tables in ClickHouse.
+- Scale out Clickhouse clusters as advised by [Clickhouse Scale out Notes](https://clickhouse.com/docs/en/architecture/horizontal-scaling)
 
-Modeling by Metrics - Measurements of all metrics of the same data source at a certain time point are stored in the same row.
-
-Modeling by Metrics - odeling by metrics, where each row of data represents a measurement of a certain metric of a data source at a certain time point.
-
-Below ER diagram depicts few critical entitites in the solution,
-
-<img src="docs/images/data-model.jpg" width="35%" height="35%" alt="data model" />
-
-Build Data Processing Jobs which perform SQL & MapReduce tasks to analyze data patterns, trends, groups, segments to answer certain types of questions.
-
-Performance Tips: Downsampling through rollups were converting high-resolution time series data into low-resolution time series data.
+When creating a materialized view, consider using a query that is frequently executed and has a high execution time. Additionally, consider using the appropriate aggregation functions to reduce the amount of data that needs to be computed.
 
 ### Performance Assurance
 
-> Due to time constraints, could not document, how services meet non-functional requirments such as Reliability, Throughput, Availability & Resiliency.
+> Due to time constraints, could not document Performance & Volume testing strategy wherein how services validated to meet non-functional requirments such as Reliability, Throughput, Availability & Resiliency.
 
 ### Security & Privacy
 
