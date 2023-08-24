@@ -22,7 +22,7 @@ There are numerous ways to design systems, each with various approaches and plen
 - [Current Solution Limitations & Constraints](#current-solution-limitations--constraints)
 - [Architecture Goals](#-architecture-goals-for-to-be-solution)
 - [Functional Analysis & Design](#-functional-analysis--design)
-    - [Functional Requirements](h#-functional-requirements)
+    - [Functional Requirements](#-functional-requirements)
     - [Non Functional Requirements](#%EF%B8%8F-non-functional-requirements)
         - [Data Volumes & Traffic Projections](#%EF%B8%8F-data-volumes--traffic-projections-)
         - [Data Modelling](#data-modelling)
