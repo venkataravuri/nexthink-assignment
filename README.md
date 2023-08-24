@@ -248,7 +248,12 @@ Peer to peer task choreography using Pub/sub model works for simplest flows, but
 Hence a centralized Orchestration Engine is also needed to orchestrate microservices-based process flows.
 - Each task in process or business flows are implemented as microservices.
 
-#### 📊 Data Analytics & Insights
+### Technical Architecture
+
+### Technology Choices & Tech Stack
+
+
+### 📊 Data Analytics & Insights
 
 Turn raw data which is a collection of facts into actionable insights. Analyse raw data for data-driven insights in the form of patterns, trends, groups, segments to answer certain types of questions. 
 
@@ -283,14 +288,33 @@ Build Data Processing Jobs which perform SQL & MapReduce tasks to analyze data p
 
 Performance Tips: Downsampling through rollups were converting high-resolution time series data into low-resolution time series data.
 
+### Performance Assurance
 
-### Technical Architecture
-
-### Technology Choices & Tech Stack
-
-#### Deployment & Security Architecture
+> Due to time constraints, could not document, how services meet non-functional requirments such as Reliability, Throughput, Availability & Resiliency.
 
 ### Security & Privacy
 
-### Performance View
+#### Authentication & Authorization
+
+> Due to time constraints, could not come up with a diagram that depicts, how Confidentiality, Integrity, Availablity (CIA) among all comunicating involoved in entire solution.
+
+**Collector Authentication**
+
+Collector & Ingestion Gateway will follow mutual authentication based on PKI certifcates. During provisioning of a collector on end-device, an identity and PKI certificates are injected.  
+
+Certficates can be rotated when employeed logged on to network through end-device management mechanisms. Identity & Access management module has to block any comprmised devices where intruder can take over identity and PKI certificates.
+
+All internal and external communciations will be done through secure channel mostly TLS.
+
+**Experience Portal & Admin Console Authentication Mechanism**
+
+A multi-factor authentication (MFA) should be established for accessing SaaS application & services.
+
+**API Communcation**
+- For Public APIs, OAuth based client & secret based mechnism would be ideal.
+- Fore internal APIs, mTLS is right option along with Tenant ID propagation through (X-Tenant-ID) and other mechanisms.
+
+#### Privacy & Data Residency
+
+
 
