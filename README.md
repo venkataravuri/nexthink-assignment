@@ -2,25 +2,23 @@
 
 # 🔥 Nexthink Interview Assignment 🎉
 
-> Refer to :globe_with_meridians: [My Github Repo](https://github.com/venkataravuri/nexthink-assignment/) for a latest copy of assignment response. Document is composed using Github's Markdowns.
+> Refer to :globe_with_meridians: [My Github Repo](https://github.com/venkataravuri/nexthink-assignment/) for a latest assignment response. The document is composed using Github's Markdowns.
 
 ## 🚁 Quick Overview
 
 This document captures **high-level solution architecture** of re-engineered and re-architected solution that replaces existing single-tenant monolith solution with a **:rocket: scalable, :wavy_dash: elastic & :office: a multi-tenant solution**.
 
-- It explains :ferris_wheel: **To-Be Architecture** through various models/views ```Functional Architecture, Technical Architecture, Deployment Architecture, Component Designs, Technology Choices and more```, each addressing unique concerns of various stakeholders & audience.
+- It explains :ferris_wheel: **To-Be Architecture** through various reference architecture models & views such as ```Functional Architecture, Technical Architecture, Deployment Architecture, Component Designs, Technology Choices and more```, each addressing unique concerns of various stakeholders & audience.
 - It also highlights how the proposed solution addresses limitations & constraints for current system.
 
-Refer to problem statement [Nexthink Architecture Quiz]() for current system contraints and goals of prposed solution.
+Refer to :question: problem statement [Nexthink Architecture Quiz]() for current system contraints and goals of proposed solution.
 
 ‼️ **Disclaimer**
 
-> While proposing solution, I made plenty of assumptions, also highlighed rationale behind those assumptions.
-
-Systems can be designed in many ways and has plenty alternatives, approaches that I took here considers _industry-standard practices, tools, resource constraints_ and more. More over **Architecure is about making "Trade-offs"** along the dimensions of scalability, reliability, throughput, cost-effectivness and more. Proposed architecture is best of everything.  
+There are numerous ways to design systems, each with various approaches and plenty of alternatives. The methods I employed in this case take into account _industry-standard practices, tools, limitations in resources, and other factors_. Moreover **Architecure is about making "Trade-offs"** along the dimensions like scalability, reliability, throughput, cost-effectivness and more. Proposed architecture accomodates best of everything.  
 
 ### 📚 Table of Contents
-- [Assumptions]() & [Out of Scope]()
+- [Assumptions](#assumptions) & [Out of Scope](out-of-scope)
 - [Current Solution Limitations & Constraints]()
 - [To-be Architecture]()
     - [High-level Architecture Goals]()
@@ -44,6 +42,8 @@ Systems can be designed in many ways and has plenty alternatives, approaches tha
 
 #### Assumptions
 
+> During the envisioning the solution, I made many assumptions and documented rationale behind those assumptions.
+
 #### Out of Scope
 
 Due to time constraintes, folloiwng topics are considered as out of scope,
@@ -56,15 +56,19 @@ Due to time constraintes, folloiwng topics are considered as out of scope,
 
 A quick recap of current system limitations,
 
-### 🚩 Architecture Goals of To-Be Solution
+1. A single-tenant system that cannot be scaled to workloads.
+2. As a monolith system, parallel development is not possible and unable to rollout new features quickly (time-to-market).
+3. System cannot cloud elasticity in cost-effective manner.
+
+### 🚩 Architecture Goals for To-Be Solution
 
 The overaching goals of re-architected solution are,
 
-- **Multi-Tenant Model**: All customers (aka. tenants) shared infrastrucutre with strong ```Tenant Isolation``` with guardrails to deal with noisy neighbours while keeping their data isolated.
-- **Scalablity & Elasticity**: Solution components should be horizontally scalable and leverage elasticity provided by underlying cloud platform. Should withstand bursty workloads during peak usage hours.
-- **Event-driven Interactions**: Solution components should be loosely coupled for resiliency and independently deployable with different frequencies. Also should enable parallel development with multiple teams working across
-- **Resilient**: Solution component should be resilient to network glitches, hardware failure with 'no single-point failue' and be crash-tolerant with recoverability & fault-tolerant.
-- **Cloud Agnostic** - Leverage mix of cloud agnostic & could-specific services 
+- **Multi-Tenant Model**: A true multi-tenant system with shared infrastrucutre across tenants with strong ```Tenant Isolation``` guardrails to deal with noisy neighbours while keeping data isolated.
+- **Scalablity & Elasticity**: Solution components should be horizontally scalable and leverage ```elasticity``` provided by underlying cloud platform. Should withstand bursty workloads during peak usage hours.
+- **Event-driven Interactions**: Solution components should be loosely-coupled for ```resiliency``` and independently rollout features with increased frequencies. Also should enable parallel development with multiple teams.
+- **Resilient**: Solution component should be resilient to network glitches, hardware failure with 'no single-point failue' and be ```crash-tolerant``` with recoverability & f```ault-tolerant```.
+- **Cloud Agnostic** - Leverage mix of cloud agnostic & could-specific services.
 - **Security, Governance and compliance**: Adhere to global data localization privacy laws.
 
 ## 🌈 Functional Analysis & Design
@@ -79,9 +83,7 @@ The main actors of the system could be,
 
 ### 🚞 Functional Requirements
 
-Only architecure significant system use cases and features are analyzed,
-
-The solution has belwo feature for IT Help Desk and Ops. teams,
+Only architecure significant system use cases and features were analyzed. The solution has below critical features for IT Help Desk and Ops. teams,
 
 **Digital Employee Experience Features**: 
 - Track a rich set of metrics like device health, OS, app performance, users, and network. Proactively identify issues, troubleshoot and remediate with automation. 
@@ -91,7 +93,7 @@ The solution has belwo feature for IT Help Desk and Ops. teams,
 System Administrators should be able to,
 
 **Workflow Orchestration**
-- Orchestrate and automate IT tasks, resolve issues, and send user notifications with Freestyle Orchestrator, a powerful, no/low-code orchestration platform. Extend workflows to third-party tools across your environment via REST API.
+- Orchestrate and automate IT tasks, resolve issues, and send user notifications.
 - Automate incident management with contextual dashboards that surface diagnostic information relevant to the specific issue. 
 
 **Actionable Insights**
@@ -99,20 +101,20 @@ Aggregate and correlate data from multiple sources across your digital workspace
 
 ### ♨️ Non Functional Requirements
 
-Following non-fucntional requiremnts have been highlighted as critical to to-be solution [Few assumed by nature of the solution],
+Following non-fucntional requiremnts have been highlighted as critical to to-be solution,
 
-- Availablity - System components should be highly available across several geographies.
-- Performance - Services should have low-latency and support high-throuput. Should accomodate burst workloads during peak hours. 
-- Resiliency - System component should be resilient to temporary glitiches and self-healing. Components should recover from crash
-- Scalabiliyt & Elasiticity - Components should be auto-scalable based on traffic patterns
-- Privacy & Data Localization - Should complaint to GDPR and other privacy governance rules.
-- Isolation - Data of each tenant is isolated.
+- **Scalability & Elasiticity** - Components should be auto-scalable based on traffic patterns.
+- **Tenant Isolation** - Data of each tenant is isolated and should have mechanism to deal with noisy neighbours.
+- **Availablity** - System components should be highly available across several geographies. _Is it 99.99% availability?_
+- **Performance** - Services should have low-latency and support high-throuput. Should accomodate burst workloads during peak hours. 
+- **Resiliency** - System component should be resilient to temporary glitiches and self-healing. Components should recover from crash
+- **Privacy & Data Localization** - Should complaint to GDPR and other privacy governance rules.
 
-RTO & RPO of the system services not specified, however it is assumed thety will be stringent as critical to businesses.
+RTO & RPO of the system services not specified, however it is assumed thety will be stringent as it is critical to businesses.
 
 ### ✈️ Data Volumes & Traffic Projections 🎢
 
-Below is quick estimate of capacity and projected traffic volumes. This information will help Infra & DevOps teams to size the infrastructure capacity to coup peak traffic scenarios. Also acts as inputs to Performance and Volume testing aka. Load Testing.
+Below is quick estimate of capacity and projected traffic volumes. This information will **help Infra & DevOps teams to size the infrastructure capacity** to coup peak traffic scenarios. Also acts as **inputs to Performance and Volume Testing** aka. Load Testing.
 
 - Each collector captures, aggregates, and broadcasts daily about 1-2000 events totaling 10MB from each device.
 - Our customers have between 10K and 500K installed collectors.
@@ -124,34 +126,35 @@ Data volume per day 	~ (Data size per day by a collector) * (# of collectors) * 
 			~ 👊 4,768 TB (Or) 4.6 PB
 ```
 
-> Note: It is unclear that data capture is compressed or not. 
+> Note: It is unclear that data capture is compressed or not.
 
 **🚖 Traffic Estimates**
 
-It is assumed that employees work 8 hours a day employees. Also assumed several employees start their work at regular interval of the day, resulting peak traffic.
+It is assumed that employees are active for 8 hours per day and collectors transmit data when devices are active only. There a chances that several employees start their work at same time of the day, resulting peak traffic.
 
-Assumption: 2000 events in a day ~ 2000 / 8 hours work ~ 5
+Assumption: 2000 events in a day ~ 2000 / 8 hours work ~ 250 per hour ~ 5 per min
 
 | Device | Traffic per **min** | Y1 Growth |
 | --- | --- | --- |
-| 1 collector | 5 rps | 6 rps/min | 
-| 500K Collectors | 👊 2.5 million rps/min | 3.5 million rps/min |
-| 1000 customers Collectors | 🚀🚀🚀 2.5 billion rps/min | 3.5 million rps/min |
+| 1 collector | 5 req-per-min | 6 req-per-min | 
+| 500K Collectors | 👊 41k rps | 50k rps |
+| 1000 customers Collectors | 🚀🚀🚀 41 million rps | 50 million rps |
 
 ### Data Modeling
 
-A shared database & shared schema approach would be ideal for given use cases. Wherein tenants' data is separated by a column in each table (could be TenantId), that shows the owner of the row.
+A shared database & shared schema approach would be cost-effective solution for multi-tenant system with low maintenance. 
 
-Every domain entity information includes three classes of columns **time, dimensions and metrics**.
+With this every domain entity should have TenantID attribute, resulting every table having tennant_id column that indicates the owner of the row.
+
+Enitities such as device performance, app performance, network performance includes three classes of columns **time, dimensions and metrics**.
 - Combination of **tenant-id & timestamp** column is the primary partition mechanism. 
 - **Dimensions** are values that can be used to filter, query or group-by.
 - **Metrics** are values that can be aggregated, and are nearly always numeric.
 
-Entities are ```modeled by data source``` over ```model by metrics```
+These entities can be ```modeled by data source``` over ```model by metrics```
 
-Modeling by Metrics - Measurements of all metrics of the same data source at a certain time point are stored in the same row.
-
-Modeling by Metrics - odeling by metrics, where each row of data represents a measurement of a certain metric of a data source at a certain time point.
+- **Modeling by data source** - Measurements of all metrics of the same data source at a certain time point are stored in the same row.
+- **Modeling by Metrics** - odeling by metrics, where each row of data represents a measurement of a certain metric of a data source at a certain time point.
 
 Below ER diagram depicts few critical entitites in the solution,
 
@@ -194,7 +197,7 @@ Ingestion Gateway is a horizontally scalable bi-directional communication servic
 - Gateway uses Kafka cluster acts as buffer layer to  Backpressure
 - Batched 
 
-#### Scaling to 2.5 billion events
+#### Scaling to 50+ million events
 
 Ingestion subsystem components should be extremely scalable to coup up with bursty workloads with low latency.
 
