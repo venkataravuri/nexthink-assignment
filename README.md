@@ -119,9 +119,9 @@ Below is quick estimate of capacity and projected traffic volumes. This informat
 - 1000 customers for a total of 15 Million endpoints
 
 ```
-Data volume per day ~ (Data size per day by a collector) * (# of collectors) * (# no. of customers)
-                    ~ 10 MB * 500 K * 1000 Customers
-					~ 👊 4,768 TB (Or) 4.6 PB
+Data volume per day 	~ (Data size per day by a collector) * (# of collectors) * (# no. of customers)
+                    	~ 10 MB * 500 K * 1000 Customers
+			~ 👊 4,768 TB (Or) 4.6 PB
 ```
 
 > Note: It is unclear that data capture is compressed or not. 
@@ -130,13 +130,13 @@ Data volume per day ~ (Data size per day by a collector) * (# of collectors) * (
 
 It is assumed that employees work 8 hours a day employees. Also assumed several employees start their work at regular interval of the day, resulting peak traffic.
 
-Assumption: 2000 events in a day ~ 2000/8 ~ 5
+Assumption: 2000 events in a day ~ 2000 / 8 hours work ~ 5
 
 | Device | Traffic per **min** | Y1 Growth |
 | --- | --- | --- |
 | 1 collector | 5 rps | 6 rps/min | 
-| 500K Collectors | 👊 2.5 million rps/min | ? |
-| 1000 customers Collectors | 🚀🚀🚀 2.5 billion rps/min | ? |
+| 500K Collectors | 👊 2.5 million rps/min | 3.5 million rps/min |
+| 1000 customers Collectors | 🚀🚀🚀 2.5 billion rps/min | 3.5 million rps/min |
 
 ### Data Modeling
 
@@ -299,11 +299,27 @@ Reactor existing 'Engine' functionality into multiple domain-specific microservi
 
 Each of these services will have their own databases where process state-machine informaiton and metadata is stored. The insights are sourced from Clickhouse database.
 
+### Tenant Isolation
+
+Every component in solution ecosystem should be **Tenant Aware**.
+
+- Detect & propagate with TenantID across layers. in REST API?
+	- Tenant ID detected from URL Path or from Domain Name (e.g., https://.com//
+	- Can be from custom Http header like **X-TENANT-ID**
+   	- Or from JWT token claims
+- Propagate TenantID across inter system communcation through HTTP headers X-TENANT-ID
+	- Extract Tenant ID and set TenantContext, make it available to local threads.
+- Make tenant-specific Data Soures or Connection Pools.
+- Implement tenant level rate-limits to avoid Noisy Neighbours.
+- Leverage **PostgreSQL Row-Level Security** feature for tenant level data access constraints & isolation.
+
 #### Service-to-Service Communincaitons
 
 Services are communicate through event-driven mechanism over a pub/sub channel. Each each service emits events which are subscribed by other services to perform the actions. For example, digital experience service can emit notification events which are subsribed by Remote Actions service to delevier to user.
 
 > Employ resiliency techniques ( Retry ( Rate Limiter ( Circuit Breaker ( Timeout ( Bulkhead ( Function() ) ) ) ) )
+
+Adopt gRPC for internal API innovacations with Google Proto Buffers.
 
 ##### Peer-to-Peer Choregraphy & Centralized Workflow/Orchestration Engine
 
@@ -348,7 +364,12 @@ Ref: [Why Not Use Something Like MapReduce?](https://clickhouse.com/docs/en/faq/
 - Build materialized views, which can reduce query times by precomputing frequently accessed data. Materialized views are precomputed views that are stored as tables in ClickHouse.
 - Scale out Clickhouse clusters as advised by [Clickhouse Scale out Notes](https://clickhouse.com/docs/en/architecture/horizontal-scaling)
 
-When creating a materialized view, consider using a query that is frequently executed and has a high execution time. Additionally, consider using the appropriate aggregation functions to reduce the amount of data that needs to be computed.
+Create materialized views, when creating materialized views consider using a query that is frequently executed and has a high execution time. Additionally, consider using the appropriate aggregation functions to reduce the amount of data that needs to be computed.
+
+##### Cloud Cost Optimizations
+
+- :moneybag: Leverage Spot instances for analytics jobs with checkpoints.
+- :moneybag: Use compression where feasible.
 
 ### Performance Assurance
 
