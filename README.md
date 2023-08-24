@@ -158,7 +158,12 @@ Enitities such as device performance, app performance, network performance inclu
 These entities can be ```modeled by data source``` over ```model by metrics```
 
 - **Modeling by data source** - Measurements of all metrics of the same data source at a certain time point are stored in the same row.
+
+<img src="docs/images/m-by-source.jpg" width="70%" height="70%" />
+
 - **Modeling by Metrics** - odeling by metrics, where each row of data represents a measurement of a certain metric of a data source at a certain time point.
+
+<img src="docs/images/m-by-metrics.jpg"  width="70%" height="70%" />
 
 > As **Clickhouse** underlying layer architecture adopts columnar storage and there is an index on each column, ```modeling by data source``` may be better.
 
