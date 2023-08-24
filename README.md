@@ -148,7 +148,7 @@ With this every domain entity should have TenantID attribute, resulting every ta
 
 Below ER diagram depicts few critical entitites in the solution,
 
-<img src="docs/images/data-model.jpg" width="35%" height="35%" alt="data model" />
+<img src="docs/images/data-model.jpg" width="45%" height="45%" alt="data model" />
 
 Enitities such as device performance, app performance, network performance includes three classes of columns **time, dimensions and metrics**.
 - Combination of **tenant-id & timestamp** column is the primary partition mechanism. 
@@ -174,18 +174,18 @@ These entities can be ```modeled by data source``` over ```model by metrics```
 Solution architecture borken down into two streams, namely,
 
 1. Ingestion subsystem
-2. Experiences subsystem 
+2. Digital Experiences subsystem 
 
 ### 🚀 Ingestion subsystem components & design
 
 The subsystem components are designed to,
 - Handle **write-heavy traffic** with **high concurrency**
-- Ensure very **low-latency** and high-throughput
+- Ensure very **low-latency** and **high-throughput**
 - Follows **Pub/Sub model** for scalability and handle **backpressure**
-- Processing of events should be idempotent and **crash-tolerant**
-- Resiliencey when service crashes
+- Processing of events should be **idempotent** and **crash-tolerant**
+- Resiliencey when services' crashes
 
-Ingestion mechanism supports in-steam trends/analytics for SRE & Tech Ops teams to spot any anomolies and take corrective action.
+Ingestion mechanism supports in-steam trends/~~analytics~~ for SRE & Tech Ops teams to spot any anomolies and take corrective action.
 
 <img src="docs/images/Ingestion.jpg" width="100%" height="100%" alt="Ingestion Subsystem Architecture" />
 
@@ -202,9 +202,11 @@ Ingestion Gateway is a horizontally scalable bi-directional communication servic
 4. Rate-limits (may require **Redis with sliding-window pattern**)
    
 - Gateway is also responsible to trigger remote actions on 'Collector Agents' when they are connected. 
-- Collector Agent & Gateway ensure that events are delivered at-least once / exactly-once through re-try and tracking id mechanisms. 
-- Gateway uses Kafka cluster acts as buffer layer to  Backpressure
-- Batched 
+- Collector Agent & Gateway ensure that events are delivered at-least once / exactly-once through re-try and producer tracking id & sequence id mechanisms. 
+- Gateway uses Kafka cluster acts as buffer layer to sustain **Backpressure**
+- Data can be batched to reduce round-trips.
+
+Gateway can be designed as Cloud-Native applciation and scaled through Kubernetes HPA. Other alternative is leverage open-source Gateways and tailor their capabilities by building custom plug-ins and extensions.
 
 #### Scaling to 50+ million events
 
@@ -222,16 +224,12 @@ Processing of raw data is decoupled from capture for high-throughput. Backpressu
 
 #### Scaling Kafka Cluster
 
-- Have multiple isolated Kafka clusters to avoid impact entire customer base.
-- Have more topic partitions for parallel processing with the In-Sync Replica set (ISR) set to at leaset 3 to avoid message losses during broker outage.
+- Have multiple isolated Kafka clusters over single large Kafka cluster to avoid impact entire customer base.
+- Have more and more topic partitions for parallel processing with the In-Sync Replica set (ISR) set to at leaset 3 to avoid message losses during broker outages.
 - Add borkers dynamically based on request throughput.
 
-**Scaling Consumers**
-
-Consumers should be auto-scaled through Kubernetes Operators in auto-pilot mode.
-
 **Kafka Topic Strategy**
-For parallel processing, multiple Kafka topics with partitions should be introduced. Topics can be designed by tenant or by data/entity type or by function and more. Topic by tenant may not be ideal, when a new tenant is added new topics & partitions should be created along with consumers should be introduced.
+For parallel processing, multiple Kafka topics with multiple partitions should be configured. Topics can be designed by tenant (or) by data/entity type (or) by function and more. Topic by tenant may not be ideal, when a new tenant is added new topics & partitions should be created along with consumers should be introduced.
 
 ### 🏇 Streaming Apps & Near-realtime Trends ~~Analytics~~
 
@@ -248,13 +246,17 @@ A dashobard for Tech. Ops. teams to monitor health of Ingestion Processing pipli
 A set of Self Contained Services (Microservices) are deployed to,
 - De-duplication of raw data (We can emply '**Rotating Bloom Filters**')
 - Enrich data before storing into Clickhouse
-- Transform into query-friendly db format
+- Transform into query-friendly DB format
 
-These Microservices are Kafka consumers and auto-scaled through K8s HPA. They have thier own database schema hosted on shared AWS RDS PostgreSQL (Is it really requred?).
+These Microservices are Kafka consumers and auto-scaled through K8s HPA. They have their own database schema hosted on shared AWS RDS PostgreSQL (Is DB requried?).
 
-There could be raw data capture service for audits, compliance and future legal conflicts or Peformance & Volume testing dress reherrsals.
+There could be need to capture raw data for audits, simulate loads for Peformance & Volume testing during dress reherrsals.
 
-## 🌎 Portal Subsystem Architecture
+**Scaling Processors aka. Kafka Consumers**
+
+Kafka Consumers can be auto-scaled through Kubernetes Operators which act as auto-pilot model.
+
+## 🌎 Digital Experience Portal Subsystem Architecture
 
 <img src="docs/images/portal.jpg" width="100%" height="100%" alt="Portal & Business service Components" />
 
@@ -285,15 +287,15 @@ Microfrontends approach enables scaling frontend development simultaneously acro
 
 Below diagram depicts Microfrontends strategy.
 
-<img src="docs/images/microfrontends.jpg" width="20%" height="20%" alt="Microfrontends">
+<img src="docs/images/microfrontends.jpg" width="40%" height="40%" alt="Microfrontends">
 
-<img src="docs/images/tech-stack.jpg" width="20%" height="20%" alt="Tecnology Stack">
+<img src="docs/images/tech-stack.jpg" width="40%" height="40%" alt="Tecnology Stack">
 
 ##### Scaling Microfrontends
 
-- Adopt build-time integration technique for intergating different modules with shared component libraries.
-- Micro-frontends should be designed stateless with distribured cache.
-- Leverage CloudFront/Cloudflare and ALB to loadbalance across multiple instances and K8s Horizontal Pod Scaler (HPA).
+- Adopt build-time integration for intergating different microfronted modules along with shared component libraries.
+- Micro-frontends should be designed stateless, adopt distribured cache.
+- Leverage CloudFront/Cloudflare and ALB to loadbalance traffic across multiple instances and adopt K8s Horizontal Pod Scaler (HPA).
 
 ### Business/Domain Services & APIs
 
@@ -308,6 +310,7 @@ Reactor existing 'Engine' functionality into multiple domain-specific microservi
 | Remote Actions | Trigger actions on user device, trigger surveys, and more |
 | Query Engine | A DSL base query generator, processor and executor aganist domain entities. |
 | Integration Platform Services | A centralized orchestration engine with independent tasks and workflow.    |
+| Others | ... |
 
 Each of these services will have their own databases where process state-machine informaiton and metadata is stored. The insights are sourced from Clickhouse database.
 
@@ -315,27 +318,27 @@ Each of these services will have their own databases where process state-machine
 
 Every component in solution ecosystem should be **Tenant Aware**.
 
-- Detect & propagate with TenantID across layers. in REST API?
-	- Tenant ID detected from URL Path or from Domain Name (e.g., https://.com//
+- Detect & propagate with TenantID across layers.
+	- Tenant ID can be detected from URL Path or from Domain Name (e.g., https://???.nexthink.com/)
 	- Can be from custom Http header like **X-TENANT-ID**
    	- Or from JWT token claims
 - Propagate TenantID across inter system communcation through HTTP headers X-TENANT-ID
-	- Extract Tenant ID and set TenantContext, make it available to local threads.
+	- Extract TenantID, create TenantContext, make it available to local threads.
 - Make tenant-specific Data Soures or Connection Pools.
 - Implement tenant level rate-limits to avoid Noisy Neighbours.
 - Leverage **PostgreSQL Row-Level Security** feature for tenant level data access constraints & isolation.
 
 #### Service-to-Service Communincaitons
 
-Services are communicate through event-driven mechanism over a pub/sub channel. Each each service emits events which are subscribed by other services to perform the actions. For example, digital experience service can emit notification events which are subsribed by Remote Actions service to delevier to user.
+Service to service communication is through event-driven mechanism over a pub/sub channel. Each each service emits events which are subscribed by other services to perform the actions. For example, digital experience service can emit notification or action events which are subsribed by Remote Actions service to delevier to user.
 
 > Employ resiliency techniques ( Retry ( Rate Limiter ( Circuit Breaker ( Timeout ( Bulkhead ( Function() ) ) ) ) )
 
-Adopt gRPC for internal API innovacations with Google Proto Buffers.
+Adopt gRPC for internal API innovocations with Google Proto Buffers.
 
 ##### Peer-to-Peer Choregraphy & Centralized Workflow/Orchestration Engine
 
-Peer to peer task choreography using Pub/sub model works for simplest flows, but this approach has following issues:
+Peer-to-peer task choreography using Pub/sub model works for simplest flows, but this approach has following issues:
 - Process flows are “embedded” within the code of multiple microservices
 - As the number of microservices grow and the complexity of the processes increases, getting visibility into these distributed workflows becomes difficult without a central orchestrator.
 - Cannot answer "How much progress made in workflow? How many steps were complete?"
