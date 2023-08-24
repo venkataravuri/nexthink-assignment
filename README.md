@@ -18,7 +18,7 @@ Refer to :question: problem statement [Nexthink Architecture Quiz]() for current
 There are numerous ways to design systems, each with various approaches and plenty of alternatives. The methods I employed in this case take into account _industry-standard practices, tools, limitations in resources, and other factors_. Moreover **Architecture is about making "Trade-offs"** along the dimensions like scalability, reliability, throughput, cost-effectiveness and more. Proposed architecture accommodates best of everything.  
 
 ### 📚 Table of Contents
-- [Assumptions](#assumptions) & [Out of Scope](out-of-scope)
+- [Assumptions](#assumptions) & [Out of Scope](#out-of-scope)
 - [Current Solution Limitations & Constraints](#current-solution-limitations--constraints)
 - [Architecture Goals](#-architecture-goals-for-to-be-solution)
 - [Functional Analysis & Design](#-functional-analysis--design)
