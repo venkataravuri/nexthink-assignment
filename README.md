@@ -33,11 +33,17 @@ There are numerous ways to design systems, each with various approaches and plen
     - [Experience Subsystem Design & Components]()
         - [Technical Architecture]()
             - [Microfrontends]()
-            - [Business/Domain Services]()
-            - [Data Analytics & Insights]()
+            - [Business/Domain Services & APIs](#businessdomain-services--apis)
+            - [Tenant Isolation](#tenant-isolation)
+            - [Service-to-Service Communications](#service-to-service-communications)
+            - [Technology Choices & Tech. Stack](#technology-choices--tech-stack)
+	- [Data Analytics & Insights](#-data-analytics--insights)
+		- [Data Analytics Jobs](#data-analytics-jobs)
 - [Deployment Architecture]()
 - [Security Architecture]()
-- [References]()
+	- [Authentication & Authorization](#authentication--authorization)
+ 	- [Privacy & Data Residency](#privacy--data-residency) 
+- [References](#references)
 
 
 #### Assumptions
@@ -387,6 +393,15 @@ Create materialized views, when creating materialized views consider using a que
 - :moneybag: Leverage Spot instances for analytics jobs with checkpoints.
 - :moneybag: Use compression where feasible.
 
+### Deployment Architecture
+
+> Due to time constraints, deployment architecture depicting following information is not captured.
+
+- How critical AWS Cloud infrastructure services such as VPC, Security Groups, NAT Gateways, CloudFront, Route53 are configured in multi-AZ across multiple regions?
+- How AWS EKS cluster is composed? How east-west & north-south traffic is managed?
+- How Clickhouse, AWS RDS PostgreSQL, Redis services are configured and scaled?
+- How DevOps pipelines are configured?
+
 ### Performance Assurance
 
 > Due to time constraints, could not document Performance & Volume testing strategy wherein how services validated to meet non-functional requirements such as Reliability, Throughput, Availability & Resiliency.
@@ -422,5 +437,9 @@ Globally, data localization rules are not uniform and many countries have adopte
 - Deploy few frontend/gateway components across multiple geo locations to store a copy of data, before it cross boarders.
 - Leverage GSLB & CDN's geo-proximity based routing capabilities to direct traffic right data centre.
 - Implement mechanisms to detect and deleted "Data Subject Rights" using 3rd party tools.
+
+### References
+- https://clickhouse.com/
+- https://nexthink.com/
 
 :pray: :pray: :pray:
