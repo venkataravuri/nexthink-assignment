@@ -190,7 +190,7 @@ The subsystem components are designed to,
 - Ensure very **low-latency** and **high-throughput**
 - Follows **Pub/Sub model** for scalability and handle **backpressure**
 - Processing of events should be **idempotent** and **crash-tolerant**
-- Resiliency when services' crashes
+- **Resiliency** when services' have transient failures.
 
 Ingestion mechanism supports in-steam trends/~~analytics~~ for SRE & Tech Ops teams to spot any anomalies and take corrective action.
 
