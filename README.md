@@ -2,20 +2,20 @@
 
 # 🔥 Nexthink Interview Assignment 🎉
 
-> Refer to :globe_with_meridians: [My Github Repo](https://github.com/venkataravuri/nexthink-assignment/) for a latest assignment response. The document is composed using Github's Markdowns.
+### :question: Problem Statement
+
+Refer to interview assignment, [Nexthink Architecture Quiz](docs/Nexthink+Architecture+Quiz+Q22023.pdf). It defines current system limitations & constraints and states target architecture requiremens and goals.
 
 ## 🚁 Quick Overview
 
 This document captures **high-level solution architecture** of re-engineered and re-architected solution that replaces existing single-tenant monolith solution with a **:rocket: scalable, :wavy_dash: elastic & :office: a multi-tenant solution**.
 
-- Explains :ferris_wheel: **To-Be Architecture** through various reference architecture models & views such as ```Functional Architecture, Technical Architecture, Deployment Architecture, Component Designs, Technology Choices and more```, each addressing unique concerns of various stakeholders & audience.
+- :ferris_wheel: **To-Be Architecture** explained through various architecture views such as ```Functional Architecture```, ```Technical Architecture```, ```Deployment Architecture```, ```Component Designs``, ``Technology Stack & Choice```, each addressing unique concerns of various stakeholders & audience.
 - Highlights how the proposed solution addresses limitations & constraints for current system.
-
-Refer to :question: problem statement [Nexthink Architecture Quiz]() for current system contraints and goals of proposed solution.
 
 ‼️ **Disclaimer**
 
-There are numerous ways to design systems, each with various approaches and plenty of alternatives. The methods I employed in this case take into account _industry-standard practices, tools, limitations in resources, and other factors_. Moreover **Architecture is about making "Trade-offs"** along the dimensions like scalability, reliability, throughput, cost-effectiveness and more. Proposed architecture accommodates best of everything.  
+There could be numerous ways systems' can be designed. Here, I have employed _industry-standard practices, technologies & tools_ taken into account constraints and other factors. Proposed solution has "**Architecture Trade-offs"** across several dimensions like scalability, reliability, throughput & cost-effectiveness.  
 
 ### 📚 Table of Contents
 - [Assumptions](#assumptions) & [Out of Scope](#out-of-scope)
