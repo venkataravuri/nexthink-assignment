@@ -15,7 +15,7 @@ This document captures **high-level solution architecture** of re-engineered and
 
 ‼️ **Disclaimer**
 
-There could be numerous ways systems' can be designed. Here, I have employed _industry-standard practices, technologies & tools_ taken into account constraints and other factors. Proposed solution has "**Architecture Trade-offs"** across several dimensions like scalability, reliability, throughput & cost-effectiveness.  
+There could be numerous ways systems' can be designed. Here, I have employed _industry-standard practices, technologies & tools_ taken into account constraints and other factors. I made "**Architecture Trade-offs"** across several dimensions like scalability, reliability, throughput & cost-effectiveness.  
 
 ### 📚 Table of Contents
 - [Assumptions](#assumptions) & [Out of Scope](#out-of-scope)
@@ -71,9 +71,9 @@ A quick recap of current system limitations,
 
 The overarching goals of re-architected solution are,
 
-- **Multi-Tenant Model**: A true multi-tenant system with shared infrastructure across tenants with strong ```Tenant Isolation``` guardrails to deal with noisy neighbours while keeping data isolated.
+- **Multi-Tenant Model**: A true multi-tenant system where tenant's share infrastructure with strong ```tenant data isolation``` and guardrails to deal with ```noisy neighbours```.
 - **Scalability & Elasticity**: Solution components should be horizontally scalable and leverage ```elasticity``` provided by underlying cloud platform. Should withstand burst workloads during peak usage hours.
-- **Event-driven Interactions**: Solution components should be loosely-coupled for ```resiliency``` and independently rollout features with increased frequencies. Also should enable parallel development with multiple teams.
+- **Event-driven Interactions**: Solution components should be ```loosely-coupled``` & ```contract-driven``` to independently rollout features with increased frequencies. Also should enable parallel development with multiple teams.
 - **Resilient**: Solution component should be resilient to network glitches, hardware failure with 'no single-point failure' and be ```crash-tolerant``` with recoverability & ```fault-tolerant```.
 - **Cloud Agnostic** - Leverage mix of cloud agnostic & could-specific services.
 - **Security, Governance and compliance**: Adhere to global data localization privacy laws.
@@ -81,7 +81,7 @@ The overarching goals of re-architected solution are,
 ## 🌈 Functional Analysis & Design
 
 The main actors of the system could be,
-1. Organization employees
+1. Organization Employees
 2. IT Help Desk Staff
 3. IT Ops.
 4. Privacy Officer & InfoSec Teams
@@ -93,8 +93,8 @@ The main actors of the system could be,
 Only architecture significant system use cases and features were analysed. The solution has below critical features for IT Help Desk and Ops. teams,
 
 **Digital Employee Experience Features**: 
-- Track a rich set of metrics like device health, OS, app performance, users, and network. Proactively identify issues, troubleshoot and remediate with automation. 
-- Insight into employee experience across installed apps and OS. Quickly surface users, apps and devices with poor experience that need your attention.
+- **Track a rich set of metrics** like device health, OS, app performance, users, and network. Proactively identify issues, troubleshoot and remediate with automation. 
+- **Insights into employee experience** across installed apps and OS. Quickly surface users, apps and devices with poor experience that need your attention.
 - Gather employee sentiment through customized and contextual surveys. Get timely insights into overall employee experience beyond quantitative performance metrics, and set up workflows based on survey responses.
 
 System Administrators should be able to,
