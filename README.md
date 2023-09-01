@@ -354,6 +354,10 @@ Hence a centralized Orchestration Engine is also needed to orchestrate microserv
 
 <img src="docs/images/orchestrator.png"  width="40%" height="40%" />
 
+#### Near-Realtime Business Insights Dashboard
+
+Analytics UI/UX can be designed using tools such as [Freeboard](http://freeboard.io/) or [mozaik.rocks](http://mozaik.rocks/) rather using Tableau / Mode Analytics which would be costly for distribution.
+
 ### Technology Choices & Tech. Stack
 
 #### Scaling Microservices
