@@ -321,6 +321,8 @@ Reactor existing 'Engine' functionality into multiple domain-specific microservi
 
 Each of these services will have their own databases where process state-machine information and metadata is stored. The insights are sourced from Clickhouse database.
 
+>  Distributing things solves scaling concerns, but introduces a whole new world of problems, many of which were previously solved by monoliths. **Mini-Monoliths** could solve explosion of Microservices & team sizes.
+
 ### Tenant Isolation
 
 Every component in solution ecosystem should be **Tenant Aware**.
