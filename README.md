@@ -10,7 +10,7 @@ Refer to interview assignment, [Nexthink Architecture Quiz](docs/Nexthink+Archit
 
 This document captures **high-level solution architecture** of re-engineered and re-architected solution that replaces existing single-tenant monolith solution with a **:rocket: scalable, :wavy_dash: elastic & :office: a multi-tenant solution**.
 
-- :ferris_wheel: **To-Be Architecture** explained through various architecture views such as ```Functional Architecture```, ```Technical Architecture```, ```Deployment Architecture```, ```Component Designs``, ``Technology Stack & Choice```, each addressing unique concerns of various stakeholders & audience.
+- :ferris_wheel: **To-Be Architecture** explained through various architecture views such as ```Functional Architecture```, ```Technical Architecture```, ```Deployment Architecture```, ```Component Designs```, ```Technology Stack & Choices```, each addressing unique concerns of various stakeholders & audience.
 - Highlights how the proposed solution addresses limitations & constraints for current system.
 
 ‼️ **Disclaimer**
