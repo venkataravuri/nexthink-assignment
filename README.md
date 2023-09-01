@@ -49,13 +49,13 @@ There could be numerous ways systems' can be designed. Here, I have employed _in
 
 #### Assumptions
 
-> During the envisioning the solution, I made many assumptions and documented rationale behind those assumptions.
+> During the envisioning the solution, I made quiet a bit of assumptions along with rationale behind those assumptions.
 
 #### Out of Scope
 
 Due to time constraints, following topics are considered as out of scope,
 
-1. Data Migration & Cutover strategy could not be documented due to time constraints.
+1. Data Migration & Application Cutover strategy could not be documented due to time constraints.
 2. Security Architecture is partially articulated.
 3. Machine Learning models & pipelines to detect anomalies and recommend actions are not captured due to time constraints.
 
